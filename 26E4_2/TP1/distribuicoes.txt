@@ -1,0 +1,60 @@
+================================================================================
+EXERCÍCIO 2: DISTRIBUIÇÕES LINUX E CONTEXTOS DE USO
+================================================================================
+Aluno: Marcus Boni
+
+1. IDENTIFICAÇÃO DA DISTRIBUIÇÃO LINUX INSTALADA VIA TERMINAL
+--------------------------------------------------------------------------------
+- Nome da Distribuição   : Ubuntu (Ubuntu 22.04.5 LTS)
+- Versão da Distribuição : 22.04 LTS (Codinome: jammy)
+- Família / Base         : Debian (debian)
+
+2. COMANDOS UTILIZADOS E SAÍDAS OBTIDAS
+--------------------------------------------------------------------------------
+$ lsb_release -a
+Distributor ID:	Ubuntu
+Description:	Ubuntu 22.04.5 LTS
+Release:	22.04
+Codename:	jammy
+
+$ cat /etc/issue
+Ubuntu 22.04.5 LTS \n \l
+
+$ cat /etc/os-release
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+
+3. OUTRAS DUAS DISTRIBUIÇÕES LINUX CONHECIDAS E SEUS CONTEXTOS DE USO
+--------------------------------------------------------------------------------
+Distribuição 1: Red Hat Enterprise Linux (RHEL) / Debian GNU/Linux
+- Contexto Típico de Uso: SERVIDORES CORPORATIVOS E INFRAESTRUTURA CRÍTICA.
+- Justificativa Técnica : Foco extremo em estabilidade, ciclos longos de suporte
+  (Long Term Support / Enterprise Lifecycle de até 10 anos), rigorosa auditoria
+  de segurança (SELinux/AppArmor) e pacotes amplamente testados. São a escolha
+  padrão para servidores de bancos de dados, servidores web de alta disponibilidade
+  e sistemas financeiros/empresariais.
+
+Distribuição 2: Alpine Linux
+- Contexto Típico de Uso: CONTAINERS, MICROSSERVIÇOS E CLOUD-NATIVE (Docker/K8s).
+- Justificativa Técnica : Projetada especificamente para ser mínima, segura e
+  eficiente, utilizando a biblioteca C 'musl' e o conjunto de utilitários
+  'BusyBox'. Gera imagens de container com cerca de 5 MB (reduzindo
+  drasticamente o tempo de deploy e a superfície de ataque de segurança), sendo
+  amplamente adotada em arquiteturas de microsserviços e pipelines DevOps.
+
+Distribuição Complementar (Estações de Desenvolvimento): Fedora Workstation
+- Contexto Típico de Uso: DESENVOLVIMENTO DE SOFTWARE E ESTAÇÕES DE TRABALHO.
+- Justificativa Técnica : Oferece versões atualizadas do kernel Linux, GCC,
+  LLVM, Podman, Python, Java e ferramentas modernas de engenharia de software,
+  equilibrando inovação tecnológica com estabilidade para desenvolvedores.
+================================================================================

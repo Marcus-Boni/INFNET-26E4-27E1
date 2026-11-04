@@ -1,0 +1,64 @@
+================================================================================
+EXERCÍCIO 10: APLICAÇÃO DE SHELL EXPANSIONS (EXPANSÕES DO SHELL)
+================================================================================
+Aluno: Marcus Boni
+
+1. CRIAÇÃO DE MÚLTIPLOS ARQUIVOS SIMULTANEAMENTE (BRACE EXPANSION / {..})
+--------------------------------------------------------------------------------
+A expansão de chaves (Brace Expansion) permite gerar combinações arbitrárias de
+strings e sequências numéricas em um único comando, evitando repetição manual:
+
+marcus@ubuntu-wsl:~$ touch servico_{auth,api,db}_{01..03}.log
+marcus@ubuntu-wsl:~$ touch relatorio_mensal_{jan,fev,mar}.txt
+
+Arquivos criados simultaneamente pela expansão de chaves:
+marcus@ubuntu-wsl:~$ ls -la servico_*.log relatorio_mensal_*.txt
+-rw-rw-r-- 1 marcus marcus 0 Nov  4 02:18 /home/marcus/relatorio_mensal_fev.txt
+-rw-rw-r-- 1 marcus marcus 0 Nov  4 02:18 /home/marcus/relatorio_mensal_jan.txt
+-rw-rw-r-- 1 marcus marcus 0 Nov  4 02:18 /home/marcus/relatorio_mensal_mar.txt
+-rw-rw-r-- 1 marcus marcus 0 Nov  4 02:18 /home/marcus/servico_api_01.log
+-rw-rw-r-- 1 marcus marcus 0 Nov  4 02:18 /home/marcus/servico_api_02.log
+-rw-rw-r-- 1 marcus marcus 0 Nov  4 02:18 /home/marcus/servico_api_03.log
+-rw-rw-r-- 1 marcus marcus 0 Nov  4 02:18 /home/marcus/servico_auth_01.log
+-rw-rw-r-- 1 marcus marcus 0 Nov  4 02:18 /home/marcus/servico_auth_02.log
+-rw-rw-r-- 1 marcus marcus 0 Nov  4 02:18 /home/marcus/servico_auth_03.log
+-rw-rw-r-- 1 marcus marcus 0 Nov  4 02:18 /home/marcus/servico_db_01.log
+-rw-rw-r-- 1 marcus marcus 0 Nov  4 02:18 /home/marcus/servico_db_02.log
+-rw-rw-r-- 1 marcus marcus 0 Nov  4 02:18 /home/marcus/servico_db_03.log
+
+2. LISTAGEM DE ARQUIVOS COM EXTENSÃO .log (PATHNAME EXPANSION / GLOBBING *.log)
+--------------------------------------------------------------------------------
+Utilizando o caractere curinga '*' (asterisco) para expandir todos os arquivos
+com sufixo '.log' no diretório pessoal e em '/var/log':
+
+a) No diretório pessoal (/home/marcus):
+marcus@ubuntu-wsl:~$ ls -lh *.log
+-rw-rw-r-- 1 marcus marcus 301 Nov  4 02:18 /home/marcus/aplicacao_local.log
+-rw-rw-r-- 1 marcus marcus   0 Nov  4 02:18 /home/marcus/servico_api_01.log
+-rw-rw-r-- 1 marcus marcus   0 Nov  4 02:18 /home/marcus/servico_api_02.log
+-rw-rw-r-- 1 marcus marcus   0 Nov  4 02:18 /home/marcus/servico_api_03.log
+-rw-rw-r-- 1 marcus marcus   0 Nov  4 02:18 /home/marcus/servico_auth_01.log
+-rw-rw-r-- 1 marcus marcus   0 Nov  4 02:18 /home/marcus/servico_auth_02.log
+-rw-rw-r-- 1 marcus marcus   0 Nov  4 02:18 /home/marcus/servico_auth_03.log
+-rw-rw-r-- 1 marcus marcus   0 Nov  4 02:18 /home/marcus/servico_db_01.log
+-rw-rw-r-- 1 marcus marcus   0 Nov  4 02:18 /home/marcus/servico_db_02.log
+-rw-rw-r-- 1 marcus marcus   0 Nov  4 02:18 /home/marcus/servico_db_03.log
+
+b) No diretório de logs do sistema (/var/log):
+marcus@ubuntu-wsl:~$ ls -lh /var/log/*.log
+-rw-r--r-- 1 root root 8.4K Nov  4 02:15 /var/log/alternatives.log
+-rw-r--r-- 1 root root  64K Sep 30 02:05 /var/log/bootstrap.log
+-rw-r--r-- 1 root root 262K Nov  4 02:15 /var/log/dpkg.log
+
+c) Filtrando apenas arquivos de log do serviço 'api' com curinga '?' (1 caractere):
+marcus@ubuntu-wsl:~$ ls -lh servico_api_0?.log
+-rw-rw-r-- 1 marcus marcus 0 Nov  4 02:18 /home/marcus/servico_api_01.log
+-rw-rw-r-- 1 marcus marcus 0 Nov  4 02:18 /home/marcus/servico_api_02.log
+-rw-rw-r-- 1 marcus marcus 0 Nov  4 02:18 /home/marcus/servico_api_03.log
+
+3. OUTRAS EXPANSÕES DO SHELL DEMONSTRADAS EM LINHA DE COMANDO
+--------------------------------------------------------------------------------
+- Expansão de Til (~)             : echo ~ -> /home/marcus
+- Expansão Aritmética ($((...))) : echo "8 * 1024 = $((8 * 1024)) MB" -> 8 * 1024 = 8192 MB
+- Substituição de Comando ($(..)): echo "Total de arquivos .log: $(ls -1 *.log | wc -l)" -> Total de arquivos .log: 10
+================================================================================

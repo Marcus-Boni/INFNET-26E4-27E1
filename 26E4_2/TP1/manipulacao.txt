@@ -1,0 +1,48 @@
+================================================================================
+EXERCÍCIO 7: MANIPULAÇÃO DE ARQUIVOS E DIRETÓRIOS (mkdir, touch, cp, rm)
+================================================================================
+Aluno: Marcus Boni
+
+1. COMANDOS UTILIZADOS EM SEQUÊNCIA
+--------------------------------------------------------------------------------
+mkdir tp_linux
+touch tp_linux/teste.txt
+cp tp_linux/teste.txt tp_linux/teste_backup.txt
+rm tp_linux/teste.txt
+
+2. EXECUÇÃO PASSO A PASSO E VERIFICAÇÃO DE ESTADOS NO TERMINAL
+--------------------------------------------------------------------------------
+# Passo 1: Criar o diretório chamado 'tp_linux'
+marcus@ubuntu-wsl:~$ mkdir tp_linux
+
+# Passo 2: Criar o arquivo 'teste.txt' dentro de 'tp_linux'
+marcus@ubuntu-wsl:~$ touch tp_linux/teste.txt
+marcus@ubuntu-wsl:~$ echo "Arquivo de teste criado para o Exercicio 7 de Linux." > tp_linux/teste.txt
+marcus@ubuntu-wsl:~$ ls -la tp_linux
+total 12
+drwxrwxr-x 2 marcus marcus 4096 Nov  4 02:18 .
+drwxr-x--- 3 marcus marcus 4096 Nov  4 02:18 ..
+-rw-rw-r-- 1 marcus marcus   53 Nov  4 02:18 teste.txt
+
+# Passo 3: Copiar 'teste.txt' para 'teste_backup.txt'
+marcus@ubuntu-wsl:~$ cp tp_linux/teste.txt tp_linux/teste_backup.txt
+marcus@ubuntu-wsl:~$ ls -la tp_linux
+total 16
+drwxrwxr-x 2 marcus marcus 4096 Nov  4 02:18 .
+drwxr-x--- 3 marcus marcus 4096 Nov  4 02:18 ..
+-rw-rw-r-- 1 marcus marcus   53 Nov  4 02:18 teste.txt
+-rw-rw-r-- 1 marcus marcus   53 Nov  4 02:18 teste_backup.txt
+
+# Passo 4: Remover o arquivo original 'teste.txt'
+marcus@ubuntu-wsl:~$ rm tp_linux/teste.txt
+
+# Passo 5: Confirmar que apenas 'teste_backup.txt' permaneceu no diretório
+marcus@ubuntu-wsl:~$ ls -la tp_linux
+total 12
+drwxrwxr-x 2 marcus marcus 4096 Nov  4 02:18 .
+drwxr-x--- 3 marcus marcus 4096 Nov  4 02:18 ..
+-rw-rw-r-- 1 marcus marcus   53 Nov  4 02:18 teste_backup.txt
+
+marcus@ubuntu-wsl:~$ cat tp_linux/teste_backup.txt
+Arquivo de teste criado para o Exercicio 7 de Linux.
+================================================================================

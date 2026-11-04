@@ -1,0 +1,46 @@
+================================================================================
+EXERCÍCIO 5: NAVEGAÇÃO PELO SISTEMA DE ARQUIVOS NA LINHA DE COMANDO
+================================================================================
+Aluno: Marcus Boni
+
+1. REGISTRO SEQUENCIAL DOS COMANDOS UTILIZADOS E SAÍDAS
+--------------------------------------------------------------------------------
+# Passo 1: Verificar o diretório inicial antes da navegação
+marcus@ubuntu-wsl:~$ pwd
+/home/marcus
+
+# Passo 2: Navegar até o diretório /var/log utilizando o comando 'cd'
+marcus@ubuntu-wsl:~$ cd /var/log
+
+# Passo 3: Confirmar o diretório atual com o comando 'pwd' (Print Working Directory)
+marcus@ubuntu-wsl:/var/log$ pwd
+/var/log
+
+# Passo 4 (Verificação): Listar os arquivos de log presentes em /var/log
+marcus@ubuntu-wsl:/var/log$ ls -la
+total 688
+drwxr-xr-x 1 root  root   4096 Oct 17 00:32 .
+drwxr-xr-x 1 root  root   4096 Sep 30 02:12 ..
+-rw-r--r-- 1 root  root   8502 Nov  4 02:15 alternatives.log
+drwxr-xr-x 1 root  root   4096 Nov  4 02:15 apt
+-rw-r--r-- 1 root  root  64549 Sep 30 02:05 bootstrap.log
+-rw-rw---- 1 root  utmp      0 Sep 30 02:05 btmp
+-rw-r--r-- 1 root  root 268053 Nov  4 02:15 dpkg.log
+-rw-r--r-- 1 root  root  32032 Nov  4 02:15 faillog
+-rw-rw-r-- 1 root  utmp 292292 Nov  4 02:15 lastlog
+drwxr-s--- 2 mysql adm    4096 Oct 17 00:32 mysql
+-rw-rw-r-- 1 root  utmp      0 Sep 30 02:05 wtmp
+
+# Passo 5: Retornar ao diretório pessoal do usuário utilizando 'cd ~' (ou 'cd')
+marcus@ubuntu-wsl:/var/log$ cd ~
+
+# Passo 6: Confirmar o retorno ao diretório pessoal do usuário
+marcus@ubuntu-wsl:~$ pwd
+/home/marcus
+
+2. RESUMO DOS COMANDOS DE NAVEGAÇÃO UTILIZADOS
+--------------------------------------------------------------------------------
+- cd /var/log : Altera o diretório de trabalho atual para o caminho absoluto /var/log.
+- pwd         : Exibe o caminho absoluto do diretório de trabalho atual.
+- cd ~        : Retorna diretamente ao diretório pessoal (HOME) do usuário atual (/home/marcus).
+================================================================================

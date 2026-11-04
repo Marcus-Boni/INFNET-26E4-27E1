@@ -1,0 +1,100 @@
+================================================================================
+EXERCÍCIO 12: PROJETO FINAL - FLUXO INTEGRADO NO TERMINAL LINUX
+================================================================================
+Aluno: Marcus Boni
+
+1. CRIAÇÃO DO DIRETÓRIO 'projeto_final' E GERAÇÃO DOS ARQUIVOS DE AUDITORIA
+--------------------------------------------------------------------------------
+marcus@ubuntu-wsl:~$ mkdir -p projeto_final
+marcus@ubuntu-wsl:~$ cd projeto_final
+marcus@ubuntu-wsl:~/projeto_final$ pwd
+/home/marcus/projeto_final
+
+Foram gerados no diretório 'projeto_final' o arquivo de relatório consolidado
+'relatorio_auditoria.txt' (utilizando redirecionamento e substituição de comandos)
+e o script executável 'coletor.sh'.
+
+2. INSPEÇÃO COM 'ls', 'file' E 'less'
+--------------------------------------------------------------------------------
+a) Listagem detalhada do diretório com 'ls -lah':
+marcus@ubuntu-wsl:~/projeto_final$ ls -lah
+total 16K
+drwxrwxr-x 2 marcus marcus 4.0K Nov  4 02:18 .
+drwxr-x--- 4 marcus marcus 4.0K Nov  4 02:18 ..
+-rwxrwxr-x 1 marcus marcus   80 Nov  4 02:18 coletor.sh
+-rw-rw-r-- 1 marcus marcus  614 Nov  4 02:18 relatorio_auditoria.txt
+
+b) Identificação dos tipos de arquivos com 'file':
+marcus@ubuntu-wsl:~/projeto_final$ file relatorio_auditoria.txt coletor.sh
+relatorio_auditoria.txt: Unicode text, UTF-8 text
+coletor.sh:              Bourne-Again shell script, ASCII text executable
+
+c) Inspeção paginada do conteúdo do arquivo com 'less':
+marcus@ubuntu-wsl:~/projeto_final$ less relatorio_auditoria.txt
+====================================================================
+RELATÓRIO DE AUDITORIA DO AMBIENTE LINUX - PROJETO FINAL
+====================================================================
+Data de geração : Wed Nov  4 02:18:32 UTC 2026
+Hostname        : ubuntu-wsl
+Sistema / Kernel: Linux 6.6.87.2-microsoft-standard-WSL2
+Distribuição    : Ubuntu 22.04.5 LTS
+Arquitetura     : x86_64
+Usuário Ativo   : marcus
+Memória Livre   : 14Gi disponíveis de 15Gi
+Disco Raiz (/)  : 943G livres (2% em uso)
+Total Processos : 8 processos ativos
+====================================================================
+
+3. INVESTIGAÇÃO DOS COMANDOS UTILIZADOS COM COMANDOS AUXILIARES
+--------------------------------------------------------------------------------
+Investigando os utilitários 'file' e 'less' com 'type', 'which', 'whatis' e 'man':
+
+marcus@ubuntu-wsl:~/projeto_final$ type file less ls
+file is /usr/bin/file
+less is /usr/bin/less
+ls is hashed (/usr/bin/ls)
+
+marcus@ubuntu-wsl:~/projeto_final$ which file less ls
+/usr/bin/file
+/usr/bin/less
+/usr/bin/ls
+
+marcus@ubuntu-wsl:~/projeto_final$ whatis file less ls
+file (1)             - determine file type
+FILE (3)             - overview of system data types
+less (1)             - opposite of more
+ls (1)               - list directory contents
+
+marcus@ubuntu-wsl:~/projeto_final$ man file | head -n 20
+FILE(1)                   BSD General Commands Manual                  FILE(1)
+
+NAME
+     file — determine file type
+
+SYNOPSIS
+     file [-bcdEhiklLNnprsSvzZ0] [--apple] [--exclude-quiet] [--extension]
+          [--mime-encoding] [--mime-type] [-e testname] [-F separator]
+          [-f namefile] [-m magicfiles] [-P name=value] file ...
+     file -C [-m magicfiles]
+     file [--help]
+
+DESCRIPTION
+     This manual page documents version 5.41 of the file command.
+
+     file tests each argument in an attempt to classify it.  There are three
+     sets of tests, performed in this order: filesystem tests, magic tests,
+     and language tests.  The first test that succeeds causes the file type to
+     be printed.
+
+4. DOCUMENTAÇÃO DO FLUXO DE TRABALHO REALIZADO
+--------------------------------------------------------------------------------
+Neste exercício integrador, combinamos:
+1) Criação e navegação estruturada de diretórios ('mkdir -p', 'cd', 'pwd');
+2) Coleta de métricas reais do sistema operacional, CPU, memória e armazenamento
+   utilizando expansões do shell ('$(...)'), pipelines ('|') e redirecionamento ('>');
+3) Verificação de permissões e metadados com 'ls -lah';
+4) Análise de assinatura mágica (magic bytes / MIME) dos arquivos com 'file';
+5) Leitura segura do relatório final com o paginador 'less';
+6) Consulta autônoma à documentação oficial do sistema com 'type', 'which',
+   'whatis' e 'man'.
+================================================================================

@@ -1,0 +1,13 @@
+====================================================================
+RELATÓRIO DE AUDITORIA DO AMBIENTE LINUX - PROJETO FINAL
+====================================================================
+Data de geração : Wed Nov  4 02:18:32 UTC 2026
+Hostname        : ubuntu-wsl
+Sistema / Kernel: Linux 6.6.87.2-microsoft-standard-WSL2
+Distribuição    : Ubuntu 22.04.5 LTS
+Arquitetura     : x86_64
+Usuário Ativo   : marcus
+Memória Livre   : 14Gi disponíveis de 15Gi
+Disco Raiz (/)  : 943G livres (2% em uso)
+Total Processos : 8 processos ativos
+====================================================================

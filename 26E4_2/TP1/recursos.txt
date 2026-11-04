@@ -1,0 +1,152 @@
+================================================================================
+EXERCÍCIO 4: ACOMPANHAMENTO DE RECURSOS COMPUTACIONAIS (CPU, MEMÓRIA E DISCO)
+================================================================================
+Aluno: Marcus Boni
+
+================================================================================
+SEÇÃO 1: INFORMAÇÕES CORESPONDENTES AO PROCESSADOR (CPU)
+================================================================================
+Comandos utilizados: 'lscpu' e 'grep -E "model name|cpu MHz|cache size|cpu cores" /proc/cpuinfo'
+
+$ lscpu
+Architecture:                         x86_64
+CPU op-mode(s):                       32-bit, 64-bit
+Address sizes:                        48 bits physical, 48 bits virtual
+Byte Order:                           Little Endian
+CPU(s):                               16
+On-line CPU(s) list:                  0-15
+Vendor ID:                            AuthenticAMD
+Model name:                           AMD Ryzen 7 7735HS with Radeon Graphics
+CPU family:                           25
+Model:                                68
+Thread(s) per core:                   2
+Core(s) per socket:                   8
+Socket(s):                            1
+Stepping:                             1
+BogoMIPS:                             6387.83
+Flags:                                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid tsc_known_freq pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext perfctr_core ssbd ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves clzero xsaveerptr arat umip vaes vpclmulqdq rdpid fsrm
+Hypervisor vendor:                    Microsoft
+Virtualization type:                  full
+L1d cache:                            256 KiB (8 instances)
+L1i cache:                            256 KiB (8 instances)
+L2 cache:                             4 MiB (8 instances)
+L3 cache:                             16 MiB (1 instance)
+NUMA node(s):                         1
+NUMA node0 CPU(s):                    0-15
+Vulnerability Gather data sampling:   Not affected
+Vulnerability Itlb multihit:          Not affected
+Vulnerability L1tf:                   Not affected
+Vulnerability Mds:                    Not affected
+Vulnerability Meltdown:               Not affected
+Vulnerability Mmio stale data:        Not affected
+Vulnerability Reg file data sampling: Not affected
+Vulnerability Retbleed:               Not affected
+Vulnerability Spec rstack overflow:   Vulnerable: Safe RET, no microcode
+Vulnerability Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:             Mitigation; Retpolines; IBPB conditional; IBRS_FW; STIBP always-on; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                  Not affected
+Vulnerability Tsx async abort:        Not affected
+
+$ head -n 26 /proc/cpuinfo
+processor	: 0
+vendor_id	: AuthenticAMD
+cpu family	: 25
+model		: 68
+model name	: AMD Ryzen 7 7735HS with Radeon Graphics
+stepping	: 1
+microcode	: 0xffffffff
+cpu MHz		: 3193.916
+cache size	: 512 KB
+physical id	: 0
+siblings	: 16
+core id		: 0
+cpu cores	: 8
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid tsc_known_freq pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext perfctr_core ssbd ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves clzero xsaveerptr arat umip vaes vpclmulqdq rdpid fsrm
+bugs		: sysret_ss_attrs null_seg spectre_v1 spectre_v2 spec_store_bypass srso ibpb_no_ret
+bogomips	: 6387.83
+TLB size	: 2560 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+
+-> Síntese de CPU identificada:
+   - Modelo da CPU      : AMD Ryzen 7 7735HS with Radeon Graphics
+   - Arquitetura        : x86_64 (64 bits, Little Endian)
+   - Núcleos / Threads  : 8 núcleos físicos (Core(s) per socket: 8) / 16 CPUs lógicas (Threads)
+   - Cache L1/L2/L3     : L1d 256 KiB, L1i 256 KiB, L2 4 MiB, L3 16 MiB
+
+================================================================================
+SEÇÃO 2: INFORMAÇÕES CORRESPONDENTES À MEMÓRIA (RAM E SWAP)
+================================================================================
+Comandos utilizados: 'free -h', 'free -m' e 'head -n 15 /proc/meminfo'
+
+$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       657Mi        13Gi        48Mi       742Mi        14Gi
+Swap:          4.0Gi          0B       4.0Gi
+
+$ free -m
+               total        used        free      shared  buff/cache   available
+Mem:           15642         657       14241          48         742       14725
+Swap:           4096           0        4096
+
+$ head -n 15 /proc/meminfo
+MemTotal:       16017600 kB
+MemFree:        14583540 kB
+MemAvailable:   15079360 kB
+Buffers:           25932 kB
+Cached:           674168 kB
+SwapCached:            0 kB
+Active:           202764 kB
+Inactive:         840812 kB
+Active(anon):      15516 kB
+Inactive(anon):   377164 kB
+Active(file):     187248 kB
+Inactive(file):   463648 kB
+Unevictable:           0 kB
+Mlocked:               0 kB
+SwapTotal:       4194304 kB
+
+-> Síntese de Memória identificada:
+   - Memória RAM Total  : ~15 GiB (15.974 MiB)
+   - Memória Disponível : ~14 GiB livres/disponíveis para alocação imediata
+   - Memória de Swap    : 4,0 GiB (4.096 MiB) configurados, 0 B em uso
+
+================================================================================
+SEÇÃO 3: INFORMAÇÕES CORRESPONDENTES AO ARMAZENAMENTO (DISCO)
+================================================================================
+Comandos utilizados: 'df -hT' e 'lsblk'
+
+$ df -hT
+Filesystem     Type     Size  Used Avail Use% Mounted on
+overlay        overlay 1007G   13G  943G   2% /
+tmpfs          tmpfs     64M     0   64M   0% /dev
+shm            tmpfs     64M     0   64M   0% /dev/shm
+C:\            9p       476G  417G   60G  88% /workspace
+/dev/sdd       ext4    1007G   13G  943G   2% /etc/hosts
+tmpfs          tmpfs    4.0K     0  4.0K   0% /proc/acpi
+
+$ lsblk
+NAME  MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0   7:0    0 780.2M  1 loop 
+loop1   7:1    0 747.2M  1 loop 
+sda     8:0    0 388.6M  1 disk 
+sdb     8:16   0   186M  1 disk 
+sdc     8:32   0     4G  0 disk [SWAP]
+sdd     8:48   0     1T  0 disk /var/lib/mysql
+                                /etc/hosts
+                                /etc/hostname
+                                /etc/resolv.conf
+sde     8:64   0 141.5M  0 disk 
+
+-> Síntese de Armazenamento (Disco) identificada:
+   - Disco virtual Linux (/dev/sdd / overlay): 1007 GiB totais, ~13 GiB usados (2%), ~943 GiB livres
+   - Volume Host montado (/workspace - C:\)  : 476 GiB totais, ~417 GiB usados (88%), ~60 GiB livres
+================================================================================

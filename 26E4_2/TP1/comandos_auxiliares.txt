@@ -1,0 +1,170 @@
+================================================================================
+EXERCÍCIO 8: CONSULTA À DOCUMENTAÇÃO DO SISTEMA E CRIAÇÃO DE ALIAS
+================================================================================
+Aluno: Marcus Boni
+
+================================================================================
+1. INVESTIGAÇÃO DO COMANDO 'ls' COM: type, which E help
+================================================================================
+a) Comando 'type ls':
+   Indica como o interpretador de comandos (shell) interpreta o nome 'ls' (se é
+   um builtin do shell, palavra-chave, função, alias ou executável externo).
+marcus@ubuntu-wsl:~$ type ls
+ls is /usr/bin/ls
+
+b) Comando 'which ls':
+   Localiza o caminho absoluto do binário executável através da variável $PATH.
+marcus@ubuntu-wsl:~$ which ls
+/usr/bin/ls
+
+c) Comando 'help' e 'ls --help':
+   Nota técnica: O comando interno 'help' do Bash exibe documentação para comandos
+   internos do shell (shell builtins, como 'cd', 'alias', 'type'). Como 'ls' é um
+   binário externo (/usr/bin/ls), 'help ls' informa que não há builtin com esse nome,
+   enquanto 'ls --help' exibe a ajuda embutida do próprio binário GNU coreutils:
+marcus@ubuntu-wsl:~$ help ls 2>&1 || true
+/workspace/run_exercises.sh: line 449: help: no help topics match `ls'.  Try `help help' or `man -k ls' or `info ls'.
+
+marcus@ubuntu-wsl:~$ ls --help | head -n 22
+Usage: ls [OPTION]... [FILE]...
+List information about the FILEs (the current directory by default).
+Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -a, --all                  do not ignore entries starting with .
+  -A, --almost-all           do not list implied . and ..
+      --author               with -l, print the author of each file
+  -b, --escape               print C-style escapes for nongraphic characters
+      --block-size=SIZE      with -l, scale sizes by SIZE when printing them;
+                               e.g., '--block-size=M'; see SIZE format below
+  -B, --ignore-backups       do not list implied entries ending with ~
+  -c                         with -lt: sort by, and show, ctime (time of last
+                               modification of file status information);
+                               with -l: show ctime and sort by name;
+                               otherwise: sort by ctime, newest first
+  -C                         list entries by columns
+      --color[=WHEN]         colorize the output; WHEN can be 'always' (default
+                               if omitted), 'auto', or 'never'; more info below
+  -d, --directory            list directories themselves, not their contents
+  -D, --dired                generate output designed for Emacs' dired mode
+  -f                         do not sort, enable -aU, disable -ls --color
+
+================================================================================
+2. INVESTIGAÇÃO DO COMANDO 'rm' COM: whatis, apropos, man E info
+================================================================================
+a) Comando 'whatis rm':
+   Exibe uma descrição resumida de uma linha extraída do banco de dados de manpages.
+marcus@ubuntu-wsl:~$ whatis rm
+rm (1)               - remove files or directories
+
+b) Comando 'apropos rm':
+   Pesquisa nos nomes e descrições das páginas de manual por palavras-chave relacionadas.
+marcus@ubuntu-wsl:~$ apropos -e rm
+rm (1)               - remove files or directories
+
+marcus@ubuntu-wsl:~$ apropos "remove files" | head -n 10
+rm (1)               - remove files or directories
+
+c) Comando 'man rm':
+   Exibe a página completa do manual de referência tradicional do Unix/Linux (seção 1).
+marcus@ubuntu-wsl:~$ man rm | head -n 35
+RM(1)                            User Commands                           RM(1)
+
+NAME
+       rm - remove files or directories
+
+SYNOPSIS
+       rm [OPTION]... [FILE]...
+
+DESCRIPTION
+       This  manual  page  documents  the  GNU version of rm.  rm removes each
+       specified file.  By default, it does not remove directories.
+
+       If the -I or --interactive=once option is given,  and  there  are  more
+       than  three  files  or  the  -r,  -R, or --recursive are given, then rm
+       prompts the user for whether to proceed with the entire operation.   If
+       the response is not affirmative, the entire command is aborted.
+
+       Otherwise,  if  a file is unwritable, standard input is a terminal, and
+       the -f or --force option is not given, or the -i  or  --interactive=al‐
+       ways  option  is  given,  rm prompts the user for whether to remove the
+       file.  If the response is not affirmative, the file is skipped.
+
+OPTIONS
+       Remove (unlink) the FILE(s).
+
+       -f, --force
+              ignore nonexistent files and arguments, never prompt
+
+       -i     prompt before every removal
+
+       -I     prompt once before removing more than three files, or  when  re‐
+              moving  recursively;  less intrusive than -i, while still giving
+              protection against most mistakes
+
+       --interactive[=WHEN]
+
+d) Comando 'info rm':
+   Exibe a documentação hipertextual detalhada do projeto GNU (Texinfo / coreutils).
+marcus@ubuntu-wsl:~$ info rm | head -n 30
+File: coreutils.info,  Node: rm invocation,  Next: shred invocation,  Prev: mv invocation,  Up: Basic operations
+
+11.5 ‘rm’: Remove files or directories
+======================================
+
+‘rm’ removes each given FILE.  By default, it does not remove
+directories.  Synopsis:
+
+     rm [OPTION]... [FILE]...
+
+   If the ‘-I’ or ‘--interactive=once’ option is given, and there are
+more than three files or the ‘-r’, ‘-R’, or ‘--recursive’ are given,
+then ‘rm’ prompts the user for whether to proceed with the entire
+operation.  If the response is not affirmative, the entire command is
+aborted.
+
+   Otherwise, if a file is unwritable, standard input is a terminal, and
+the ‘-f’ or ‘--force’ option is not given, or the ‘-i’ or
+‘--interactive=always’ option _is_ given, ‘rm’ prompts the user for
+whether to remove the file.  If the response is not affirmative, the
+file is skipped.
+
+   Any attempt to remove a file whose last file name component is ‘.’ or
+‘..’ is rejected without any prompting, as mandated by POSIX.
+
+   _Warning_: If you use ‘rm’ to remove a file, it is usually possible
+to recover the contents of that file.  If you want more assurance that
+the contents are unrecoverable, consider using ‘shred’.
+
+   The program accepts the following options.  Also see *note Common
+
+================================================================================
+3. CRIAÇÃO E TESTE DE UM ALIAS SIMPLES PARA O COMANDO 'ls'
+================================================================================
+marcus@ubuntu-wsl:~$ alias listar='ls -la'
+marcus@ubuntu-wsl:~$ alias ll='ls -lah --color=auto'
+
+# Verificando os aliases registrados na sessão:
+marcus@ubuntu-wsl:~$ alias
+alias listar='ls -la'
+alias ll='ls -lah --color=auto'
+
+# Verificando como o comando 'type' identifica o novo alias:
+marcus@ubuntu-wsl:~$ type listar
+listar is aliased to `ls -la'
+
+# Executando o alias criado:
+marcus@ubuntu-wsl:~$ listar
+total 76
+drwxr-x--- 3 marcus marcus  4096 Nov  4 02:18 .
+drwxr-xr-x 1 root   root    4096 Nov  4 02:15 ..
+-rw-r--r-- 1 marcus marcus   220 Jan  6  2022 .bash_logout
+-rw-r--r-- 1 marcus marcus  3771 Jan  6  2022 .bashrc
+-rw-r--r-- 1 marcus marcus   807 Jan  6  2022 .profile
+-rw-rw-r-- 1 marcus marcus   301 Nov  4 02:18 aplicacao_local.log
+-rw-rw-r-- 1 marcus marcus   660 Nov  4 02:18 backup_dados.tar.gz
+-rwxr-xr-x 1 marcus marcus 35128 Nov  4 02:18 binario_elf
+-rwxrwxr-x 1 marcus marcus   129 Nov  4 02:18 monitor_sistema.sh
+-rw-rw-r-- 1 marcus marcus   779 Nov  4 02:18 notas_estudo.txt
+drwxrwxr-x 2 marcus marcus  4096 Nov  4 02:18 tp_linux
+================================================================================

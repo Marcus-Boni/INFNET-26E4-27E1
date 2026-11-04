@@ -1,0 +1,67 @@
+================================================================================
+EXERCÍCIO 1: PAPEL DO SISTEMA OPERACIONAL LINUX EM SISTEMAS COMPUTACIONAIS
+================================================================================
+Aluno: Marcus Boni
+Ambiente: Linux via WSL2 (Windows Subsystem for Linux 2) / Container Ubuntu
+
+1. IDENTIFICAÇÃO DAS INFORMAÇÕES GERAIS DO SISTEMA OPERACIONAL
+--------------------------------------------------------------------------------
+a) Nome do sistema operacional:
+   - Sistema / Kernel : Linux (GNU/Linux)
+   - Distribuição     : Ubuntu 22.04.5 LTS
+
+b) Tipo de sistema operacional (baseado em Unix):
+   - Tipo / Família   : Unix-like (baseado em Unix / compatível com padrão POSIX)
+   - Subsistema OS    : GNU/Linux (Núcleo Linux + Utilitários do Projeto GNU)
+
+c) Versão do sistema operacional:
+   - Versão da Distro : 22.04.5 LTS (Jammy Jellyfish)
+   - Versão do Kernel : 6.6.87.2-microsoft-standard-WSL2
+   - Build do Kernel  : #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025
+
+d) Arquitetura do sistema (32 ou 64 bits):
+   - Arquitetura HW   : x86_64 (64 bits)
+   - Largura de Bits  : 64 bits (confirmado via 'getconf LONG_BIT' e 'arch')
+
+2. COMANDOS EXECUTADOS NO TERMINAL E SAÍDAS REAIS
+--------------------------------------------------------------------------------
+$ uname -a
+Linux ubuntu-wsl 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+
+$ uname -s && uname -o && uname -r && uname -m
+Linux
+GNU/Linux
+6.6.87.2-microsoft-standard-WSL2
+x86_64
+
+$ arch && getconf LONG_BIT
+x86_64
+64
+
+$ cat /etc/os-release
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+
+3. PAPEL DO LINUX NO AMBIENTE COMPUTACIONAL
+--------------------------------------------------------------------------------
+O sistema operacional Linux atua como a camada fundamental de intermediação entre
+o hardware físico/virtualizado (processador, memória RAM, discos e interfaces de
+rede) e as aplicações de usuário. Suas funções centrais incluem:
+- Gerenciamento de Processos: Escalonamento preemptivo de tarefas na CPU.
+- Gerenciamento de Memória: Alocação de memória virtual, paginação e proteção de
+  espaço de endereçamento entre processos.
+- Abstração de Hardware e E/S: Fornecimento de chamadas de sistema (syscalls)
+  padronizadas e Sistema de Arquivos Virtual (VFS).
+- Estabilidade e Previsibilidade: Ampla adoção em servidores, computação em
+  nuvem, containers e desenvolvimento científico pela eficiência e transparência.
+================================================================================

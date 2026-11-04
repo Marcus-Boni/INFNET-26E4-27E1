@@ -1,0 +1,82 @@
+================================================================================
+EXERCÍCIO 3: EXECUÇÃO E INTERPRETAÇÃO DE COMANDOS BÁSICOS
+================================================================================
+Aluno: Marcus Boni
+
+1. EXECUÇÃO EM SEQUÊNCIA DOS COMANDOS (date, cal, df, free e exit)
+--------------------------------------------------------------------------------
+[Comando 1: date]
+$ date
+Wed Nov  4 02:18:32 UTC 2026
+
+[Comando 2: cal]
+$ cal
+   November 2026      
+Su Mo Tu We Th Fr Sa  
+ 1  2  3  4  5  6  7  
+ 8  9 10 11 12 13 14  
+15 16 17 18 19 20 21  
+22 23 24 25 26 27 28  
+29 30                 
+                      
+
+[Comando 3: df]
+$ df
+Filesystem      1K-blocks      Used Available Use% Mounted on
+overlay        1055762868  13269820 988789576   2% /
+tmpfs               65536         0     65536   0% /dev
+shm                 65536         0     65536   0% /dev/shm
+C:\             498934780 437036468  61898312  88% /workspace
+/dev/sdd       1055762868  13269820 988789576   2% /etc/hosts
+tmpfs                   4         0         4   0% /proc/acpi
+
+$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+overlay        1007G   13G  943G   2% /
+tmpfs            64M     0   64M   0% /dev
+shm              64M     0   64M   0% /dev/shm
+C:\             476G  417G   60G  88% /workspace
+/dev/sdd       1007G   13G  943G   2% /etc/hosts
+tmpfs           4.0K     0  4.0K   0% /proc/acpi
+
+[Comando 4: free]
+$ free
+               total        used        free      shared  buff/cache   available
+Mem:        16017600      673288    14584016       49204      760296    15079836
+Swap:        4194304           0     4194304
+
+$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       657Mi        13Gi        48Mi       742Mi        14Gi
+Swap:          4.0Gi          0B       4.0Gi
+
+[Comando 5: exit]
+$ bash -c "echo 'Encerrando sessao atual do terminal...'; exit 0"
+Encerrando sessao atual do terminal...
+logout (Código de saída / Exit status: 0)
+
+2. IDENTIFICAÇÃO DOS COMANDOS DE ARMAZENAMENTO E MEMÓRIA
+--------------------------------------------------------------------------------
+a) Comando que fornece informações sobre ARMAZENAMENTO (Disco):
+   -> Comando: df (Disk Free)
+   -> Explicação: O comando 'df' exibe o espaço em disco utilizado e disponível
+      em todos os sistemas de arquivos montados no sistema operacional, mostrando
+      o dispositivo/sistema de arquivos (Filesystem), tamanho total (1K-blocks ou
+      Size com -h), espaço usado (Used), espaço disponível (Available), percentual
+      de uso (Use%) e o diretório de montagem (Mounted on).
+
+b) Comando que fornece informações sobre MEMÓRIA (RAM e Swap):
+   -> Comando: free
+   -> Explicação: O comando 'free' apresenta um resumo instantâneo do uso da
+      memória física (Mem / RAM) e da memória de troca em disco (Swap),
+      detalhando a memória total instalada (total), em uso pelos processos (used),
+      totalmente livre (free), compartilhada (shared), alocada em buffers/cache
+      do kernel (buff/cache) e efetivamente disponível para novas aplicações
+      sem necessidade de swapping (available).
+
+c) Resumo dos demais comandos executados:
+   -> date : Exibe ou define a data e hora atuais do sistema operacional.
+   -> cal  : Exibe o calendário mensal/anual formatado no terminal.
+   -> exit : Encerra o interpretador de comandos (shell) atual e retorna o
+             código de saída da sessão.
+================================================================================

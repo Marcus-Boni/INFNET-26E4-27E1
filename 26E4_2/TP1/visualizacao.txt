@@ -1,0 +1,81 @@
+================================================================================
+EXERCÍCIO 6: INSPEÇÃO DE TIPOS DE ARQUIVOS E VISUALIZAÇÃO SEGURA (ls, file, less)
+================================================================================
+Aluno: Marcus Boni
+
+1. LISTAGEM DOS ARQUIVOS DO DIRETÓRIO PESSOAL UTILIZANDO 'ls'
+--------------------------------------------------------------------------------
+marcus@ubuntu-wsl:~$ ls
+aplicacao_local.log
+backup_dados.tar.gz
+binario_elf
+monitor_sistema.sh
+notas_estudo.txt
+
+marcus@ubuntu-wsl:~$ ls -lah
+total 72K
+drwxr-x--- 2 marcus marcus 4.0K Nov  4 02:18 .
+drwxr-xr-x 1 root   root   4.0K Nov  4 02:15 ..
+-rw-r--r-- 1 marcus marcus  220 Jan  6  2022 .bash_logout
+-rw-r--r-- 1 marcus marcus 3.7K Jan  6  2022 .bashrc
+-rw-r--r-- 1 marcus marcus  807 Jan  6  2022 .profile
+-rw-rw-r-- 1 marcus marcus  301 Nov  4 02:18 aplicacao_local.log
+-rw-rw-r-- 1 marcus marcus  660 Nov  4 02:18 backup_dados.tar.gz
+-rwxr-xr-x 1 marcus marcus  35K Nov  4 02:18 binario_elf
+-rwxrwxr-x 1 marcus marcus  129 Nov  4 02:18 monitor_sistema.sh
+-rw-rw-r-- 1 marcus marcus  779 Nov  4 02:18 notas_estudo.txt
+
+2. IDENTIFICAÇÃO DO TIPO DE TRÊS (OU MAIS) ARQUIVOS DISTINTOS COM 'file'
+--------------------------------------------------------------------------------
+Foram selecionados arquivos de naturezas distintas no diretório pessoal:
+1) notas_estudo.txt      (Arquivo de texto UTF-8)
+2) monitor_sistema.sh    (Script executável Bash)
+3) binario_elf           (Executável binário compilado ELF 64-bit)
+4) backup_dados.tar.gz   (Arquivo compactado Gzip)
+
+marcus@ubuntu-wsl:~$ file notas_estudo.txt monitor_sistema.sh binario_elf backup_dados.tar.gz
+notas_estudo.txt:    ASCII text
+monitor_sistema.sh:  Bourne-Again shell script, ASCII text executable
+binario_elf:         ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=05fcea56aa5e9ab4eab8bb1294538ad832b2d7d5, for GNU/Linux 3.2.0, stripped
+backup_dados.tar.gz: gzip compressed data, from Unix, original size modulo 2^32 10240
+
+3. VISUALIZAÇÃO DE CONTEÚDO DE ARQUIVO DE TEXTO E LOG COM 'less'
+--------------------------------------------------------------------------------
+O utilitário 'less' permite inspecionar arquivos de texto e logs de forma paginada
+e segura, sem carregar todo o arquivo na memória RAM de uma só vez.
+
+a) Visualizando o arquivo de texto 'notas_estudo.txt':
+marcus@ubuntu-wsl:~$ less notas_estudo.txt
+================================================================
+NOTAS DE ESTUDO - ARQUITETURA E SISTEMA OPERACIONAL LINUX
+================================================================
+1. Kernel Linux: Gerencia CPU (escalonador CFS), memoria virtual,
+   sistema de arquivos (VFS) e drivers de dispositivos.
+2. Shell (Bash): Interpretador de comandos que faz a interface
+   entre o usuario e as chamadas de sistema (syscalls) do kernel.
+3. Hierarquia FHS (Filesystem Hierarchy Standard):
+   - /bin, /usr/bin : Binarios essenciais de usuario
+   - /etc           : Arquivos de configuracao do sistema
+   - /var/log       : Registros (logs) de eventos e servicos
+   - /home          : Diretorios pessoais dos usuarios
+   - /proc, /sys    : Sistemas de arquivos virtuais do kernel
+
+b) Visualizando o arquivo de log 'aplicacao_local.log' e '/var/log/alternatives.log':
+marcus@ubuntu-wsl:~$ less aplicacao_local.log
+2026-11-03 23:00:01 [INFO] Servico inicializado com sucesso na porta 8080.
+2026-11-03 23:05:12 [INFO] Conexao estabelecida com o pool de dados.
+2026-11-03 23:10:44 [WARN] Uso de cache atingiu 75% do limite configurado.
+2026-11-03 23:14:02 [INFO] Rotina de verificacao periodica concluida (status=OK).
+
+marcus@ubuntu-wsl:~$ less /var/log/alternatives.log | head -n 10
+update-alternatives 2026-09-30 02:05:35: run with --install /usr/bin/awk awk /usr/bin/mawk 5 --slave /usr/share/man/man1/awk.1.gz awk.1.gz /usr/share/man/man1/mawk.1.gz --slave /usr/bin/nawk nawk /usr/bin/mawk --slave /usr/share/man/man1/nawk.1.gz nawk.1.gz /usr/share/man/man1/mawk.1.gz
+update-alternatives 2026-09-30 02:05:35: link group awk updated to point to /usr/bin/mawk
+update-alternatives 2026-09-30 02:05:40: run with --install /usr/bin/which which /usr/bin/which.debianutils 0 --slave /usr/share/man/man1/which.1.gz which.1.gz /usr/share/man/man1/which.debianutils.1.gz --slave /usr/share/man/de/man1/which.1.gz which.de1.gz /usr/share/man/de/man1/which.debianutils.1.gz --slave /usr/share/man/es/man1/which.1.gz which.es1.gz /usr/share/man/es/man1/which.debianutils.1.gz --slave /usr/share/man/fr/man1/which.1.gz which.fr1.gz /usr/share/man/fr/man1/which.debianutils.1.gz --slave /usr/share/man/it/man1/which.1.gz which.it1.gz /usr/share/man/it/man1/which.debianutils.1.gz --slave /usr/share/man/ja/man1/which.1.gz which.ja1.gz /usr/share/man/ja/man1/which.debianutils.1.gz --slave /usr/share/man/pl/man1/which.1.gz which.pl1.gz /usr/share/man/pl/man1/which.debianutils.1.gz --slave /usr/share/man/sl/man1/which.1.gz which.sl1.gz /usr/share/man/sl/man1/which.debianutils.1.gz
+update-alternatives 2026-09-30 02:05:40: link group which updated to point to /usr/bin/which.debianutils
+update-alternatives 2026-09-30 02:05:40: run with --install /usr/bin/awk awk /usr/bin/mawk 5 --slave /usr/share/man/man1/awk.1.gz awk.1.gz /usr/share/man/man1/mawk.1.gz --slave /usr/bin/nawk nawk /usr/bin/mawk --slave /usr/share/man/man1/nawk.1.gz nawk.1.gz /usr/share/man/man1/mawk.1.gz
+update-alternatives 2026-09-30 02:05:40: run with --install /usr/share/man/man7/builtins.7.gz builtins.7.gz /usr/share/man/man7/bash-builtins.7.gz 10
+update-alternatives 2026-09-30 02:05:40: link group builtins.7.gz updated to point to /usr/share/man/man7/bash-builtins.7.gz
+update-alternatives 2026-09-30 02:05:41: run with --install /usr/sbin/rmt rmt /usr/sbin/rmt-tar 50 --slave /usr/share/man/man8/rmt.8.gz rmt.8.gz /usr/share/man/man8/rmt-tar.8.gz
+update-alternatives 2026-09-30 02:05:41: link group rmt updated to point to /usr/sbin/rmt-tar
+update-alternatives 2026-09-30 02:05:41: run with --install /usr/bin/pager pager /bin/more 50 --slave /usr/share/man/man1/pager.1.gz pager.1.gz /usr/share/man/man1/more.1.gz
+================================================================================

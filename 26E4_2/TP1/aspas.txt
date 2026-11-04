@@ -1,0 +1,50 @@
+================================================================================
+EXERCÍCIO 11: USO DE ASPAS SIMPLES E DUPLAS NA LINHA DE COMANDO
+================================================================================
+Aluno: Marcus Boni
+
+1. CRIAÇÃO DE ARQUIVO COM ESPAÇO NO NOME UTILIZANDO ASPAS ADEQUADAS
+--------------------------------------------------------------------------------
+Sem o uso de aspas (ou caractere de escape '\'), o shell divide os argumentos nos
+espaços em branco (Word Splitting), criando múltiplos arquivos distintos em vez de
+um único arquivo. Com aspas, o nome completo é tratado como um único argumento:
+
+marcus@ubuntu-wsl:~$ touch "arquivo com espaco no nome.txt"
+marcus@ubuntu-wsl:~$ touch 'segundo arquivo com espaco.txt'
+marcus@ubuntu-wsl:~$ echo "Conteudo de teste em arquivo com espacos no nome." > "arquivo com espaco no nome.txt"
+
+Verificando os arquivos criados com 'ls -la':
+marcus@ubuntu-wsl:~$ ls -la *" "*
+-rw-rw-r-- 1 marcus marcus 50 Nov  4 02:18 /home/marcus/arquivo com espaco no nome.txt
+-rw-rw-r-- 1 marcus marcus  0 Nov  4 02:18 /home/marcus/segundo arquivo com espaco.txt
+
+Verificando o tipo e conteúdo do arquivo criado:
+marcus@ubuntu-wsl:~$ file "arquivo com espaco no nome.txt"
+/home/marcus/arquivo com espaco no nome.txt: ASCII text
+
+2. COMPARAÇÃO ENTRE ASPAS DUPLAS ("...") E ASPAS SIMPLES ('...') COM 'echo'
+--------------------------------------------------------------------------------
+Teste 1: Expansão de Variáveis de Ambiente ($USER e $HOME)
+marcus@ubuntu-wsl:~$ echo "Aspas Duplas  -> Usuario: $USER | Home: $HOME"
+Aspas Duplas  -> Usuario: marcus | Home: /home/marcus
+
+marcus@ubuntu-wsl:~$ echo 'Aspas Simples -> Usuario: $USER | Home: $HOME'
+Aspas Simples -> Usuario: $USER | Home: $HOME
+
+Teste 2: Substituição de Comandos ($(hostname) e $(date +%F)) e Aritmética ($((2 + 2)))
+marcus@ubuntu-wsl:~$ echo "Aspas Duplas  -> Host: $(hostname) | Data: $(date +%F) | Soma: $((2 + 2))"
+Aspas Duplas  -> Host: ubuntu-wsl | Data: 2026-11-04 | Soma: 4
+
+marcus@ubuntu-wsl:~$ echo 'Aspas Simples -> Host: $(hostname) | Data: $(date +%F) | Soma: $((2 + 2))'
+Aspas Simples -> Host: $(hostname) | Data: $(date +%F) | Soma: $((2 + 2))
+
+3. OBSERVAÇÕES TÉCNICAS E CONCLUSÃO
+--------------------------------------------------------------------------------
+- Aspas Duplas ("..."): Agrupam o texto preservando os espaços em branco (evitando
+  Word Splitting e expansão de curingas como *), MAS PERMITEM a interpretação pelo
+  shell dos metacaracteres '$' (expansão de variáveis e aritmética), '`' / '$(...)'
+  (substituição de comandos) e '\' (caractere de escape).
+- Aspas Simples ('...'): Preservam o valor ESTRITAMENTE LITERAL de todos os
+  caracteres dentro delas. Nenhuma variável, comando ou caractere especial é
+  expandido pelo shell.
+================================================================================
