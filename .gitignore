@@ -1,0 +1,18 @@
+# Relatórios em PDF e scripts auxiliares locais de geração
+*.pdf
+**/Relatorio_Final_TP_Linux.pdf
+**/generate_screenshots_and_pdf.py
+**/relatorio_evidencias_linux.html
+
+# Python / Ambientes virtuais
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# IDEs e Sistema Operacional
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

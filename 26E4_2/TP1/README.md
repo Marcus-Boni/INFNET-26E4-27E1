@@ -9,13 +9,7 @@
 
 Este projeto corresponde à entrega do **Teste de Performance 1 (TP1)** da disciplina **Sistemas Operacionais com Linux e Python (`26E4_2`)** no **Instituto Infnet** (Bloco: *Ciência da Computação `[26E4-27E1]`*).
 
-Contém a resolução prática dos **12 exercícios de linha de comando Linux**, acompanhada dos arquivos de evidência (`.txt`), diretórios e artefatos gerados (`tp_linux/` e `projeto_final/`), capturas de tela do terminal (`screenshots/`) e o **Relatório Consolidado em PDF**.
-
----
-
-## 📄 Relatório Consolidado em PDF (Entrega)
-
-- 📑 **[`Relatorio_Final_TP_Linux.pdf`](./Relatorio_Final_TP_Linux.pdf)** — Documento único em PDF reunindo todas as capturas de tela (screenshots) e o conteúdo integral dos 12 arquivos `.txt` de evidência gerados durante a execução das tarefas.
+Contém a resolução prática dos **12 exercícios de linha de comando Linux**, acompanhada dos arquivos de evidência (`.txt`), diretórios e artefatos gerados (`tp_linux/` e `projeto_final/`) e capturas de tela do terminal (`screenshots/`).
 
 ---
 
@@ -83,7 +77,7 @@ Contém a resolução prática dos **12 exercícios de linha de comando Linux**,
 - [`tp_linux/`](./tp_linux/) — Diretório criado no **Exercício 7**, contendo o arquivo copiado [`teste_backup.txt`](./tp_linux/teste_backup.txt) após a remoção de `teste.txt`.
 - [`projeto_final/`](./projeto_final/) — Diretório criado no **Exercício 12**, contendo o relatório de auditoria [`relatorio_auditoria.txt`](./projeto_final/relatorio_auditoria.txt) e o script [`coletor.sh`](./projeto_final/coletor.sh).
 - [`run_exercises.sh`](./run_exercises.sh) — Script Bash para reprodução automatizada dos 12 exercícios em ambiente Linux.
-- [`generate_screenshots_and_pdf.py`](./generate_screenshots_and_pdf.py) — Script Python para geração das capturas de tela e compilação do PDF consolidado.
 
 ---
 Feito com dedicação para a disciplina de **Sistemas Operacionais com Linux e Python** 🎓
+

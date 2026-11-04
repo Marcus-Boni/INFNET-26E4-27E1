@@ -20,7 +20,7 @@ Cada disciplina possui sua própria pasta identificada pelo código oficial da m
 │   └── 📄 AT/
 │
 ├── 📂 26E4_2/          → Sistemas Operacionais com Linux e Python
-│   ├── 📄 TP1/         ✅ (Implementado - Exercícios Práticos de Linux + PDF)
+│   ├── 📄 TP1/
 │   ├── 📄 TP2/
 │   ├── 📄 TP3/
 │   └── 📄 AT/
