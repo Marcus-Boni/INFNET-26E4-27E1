@@ -1,0 +1,242 @@
+================================================================================
+EXERCÍCIO 12: ANÁLISE INTEGRADA DE DISPOSITIVO DE ARMAZENAMENTO
+================================================================================
+Aluno: Marcus Boni
+Dispositivo Analisado: /dev/sde (sde)
+Arquivos de Etapas Registrados Separadamente:
+  - analise_dispositivo/etapa1_dev.txt
+  - analise_dispositivo/etapa2_kernel_particoes.txt
+  - analise_dispositivo/etapa3_hierarquia_bloco.txt
+  - analise_dispositivo/etapa4_comando_auxiliar.txt
+
+================================================================================
+SEÇÃO 1: IDENTIFICAÇÃO DO DISPOSITIVO E REPRESENTAÇÃO NO DIRETÓRIO /dev
+================================================================================
+[Comandos executados]
+- ls -la /dev | grep -E '\bsde\b' > analise_dispositivo/etapa1_dev.txt
+- ls -la /dev/disk/by-id /dev/disk/by-path /dev/disk/by-uuid | grep sde >> analise_dispositivo/etapa1_dev.txt
+
+[Finalidade de cada comando]
+- ls -la /dev          : Lista todos os nós de dispositivos especiais gerenciados no /dev
+                         com permissões, tipo (b/c), major/minor e data de criação.
+- grep -E '\bsde\b'   : Filtra via pipeline exclusivamente as linhas referentes ao
+                         dispositivo sde.
+- ls -la /dev/disk/... : Exibe os links simbólicos persistentes criados pelo udev
+                         (por ID SCSI/WWN, caminho de barramento e UUID do filesystem).
+
+[Principais informações obtidas]
+# Etapa A - Representacao do dispositivo sde no diretorio /dev
+$ ls -la /dev | grep -E '\bsde\b'
+brw-rw----  1 root disk      8,  64 Nov 24 00:26 sde
+
+$ ls -la /dev/disk/by-id /dev/disk/by-path /dev/disk/by-uuid | grep sde
+lrwxrwxrwx 1 root root   9 Nov 24 00:26 scsi-360022480496e4607afffef820ca96e5b -> ../../sde
+lrwxrwxrwx 1 root root   9 Nov 24 00:26 wwn-0x60022480496e4607afffef820ca96e5b -> ../../sde
+lrwxrwxrwx 1 root root   9 Nov 24 00:26 acpi-MSFT1000:00-scsi-0:0:0:4 -> ../../sde
+lrwxrwxrwx 1 root root   9 Nov 24 00:26 ddab76b4-1c7e-4755-9232-39ed3c246e3b -> ../../sde
+
+-> Síntese da Seção 1:
+   O arquivo especial /dev/sde é um dispositivo de bloco ('b'), com Major Number 8
+   (driver SCSI disk 'sd') e Minor Number 64. O udev mantém links simbólicos
+   persistentes por caminho ACPI/SCSI, por identificador WWN/SCSI e por UUID do
+   sistema de arquivos ext4, garantindo referência estável independentemente da
+   ordem de enumeração dos discos.
+
+================================================================================
+SEÇÃO 2: RECONHECIMENTO PELO KERNEL, METADADOS UDEV E PARTIÇÕES
+================================================================================
+[Comandos executados]
+- journalctl -k --no-pager | grep -iE 'sde|0:0:0:4' > analise_dispositivo/etapa2_kernel_particoes.txt
+- cat /proc/partitions | grep -E 'major|sde' >> analise_dispositivo/etapa2_kernel_particoes.txt
+- udevadm info --query=all --name=/dev/sde | grep -E 'DEVNAME|DEVTYPE|MAJOR|MINOR|SUBSYSTEM|ID_VENDOR=|ID_MODEL=|ID_BUS|ID_FS_TYPE|ID_FS_UUID=' >> analise_dispositivo/etapa2_kernel_particoes.txt
+
+[Finalidade de cada comando]
+- journalctl -k        : Consulta as mensagens emitidas diretamente pelo kernel Linux
+                         durante o boot e detecção de hardware.
+- cat /proc/partitions : Exibe a tabela interna do kernel contendo dispositivos de
+                         bloco e partições reconhecidas (major, minor e total de blocos de 1 KiB).
+- udevadm info         : Consulta o banco de metadados do udev para o dispositivo,
+                         expondo fabricante, modelo, barramento e assinatura de filesystem.
+
+[Principais informações obtidas]
+# Etapa B - Reconhecimento do dispositivo sde pelo kernel, udev e particoes
+$ journalctl -k --no-pager | grep -iE 'sde|0:0:0:4'
+Nov 24 00:26:08 ubuntu-wsl kernel: scsi 0:0:0:4: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: Attached scsi generic sg4 type 0
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] 2147483648 512-byte logical blocks: (1.10 TB/1.00 TiB)
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] 4096-byte physical blocks
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Write Protect is off
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Mode Sense: 0f 00 00 00
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Attached SCSI disk
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Synchronizing SCSI cache
+Nov 24 00:26:08 ubuntu-wsl kernel: scsi 0:0:0:4: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: Attached scsi generic sg4 type 0
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] 2147483648 512-byte logical blocks: (1.10 TB/1.00 TiB)
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] 4096-byte physical blocks
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Write Protect is off
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Mode Sense: 0f 00 00 00
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Attached SCSI disk
+Nov 24 00:26:08 ubuntu-wsl kernel: EXT4-fs (sde): recovery complete
+Nov 24 00:26:08 ubuntu-wsl kernel: EXT4-fs (sde): mounted filesystem ddab76b4-1c7e-4755-9232-39ed3c246e3b r/w with ordered data mode. Quota mode: none.
+Nov 24 00:26:08 ubuntu-wsl kernel: block sde: the capability attribute has been deprecated.
+
+$ cat /proc/partitions | grep -E 'major|sde'
+major minor  #blocks  name
+   8       64 1073741824 sde
+
+$ udevadm info --query=all --name=/dev/sde | grep -E 'DEVNAME|DEVTYPE|MAJOR|MINOR|SUBSYSTEM|ID_VENDOR=|ID_MODEL=|ID_BUS|ID_FS_TYPE|ID_FS_UUID='
+E: DEVNAME=/dev/sde
+E: DEVTYPE=disk
+E: MAJOR=8
+E: MINOR=64
+E: SUBSYSTEM=block
+E: ID_VENDOR=Msft
+E: ID_MODEL=Virtual_Disk
+E: ID_BUS=scsi
+E: ID_FS_UUID=ddab76b4-1c7e-4755-9232-39ed3c246e3b
+E: ID_FS_TYPE=ext4
+
+-> Síntese da Seção 2:
+   O kernel detecta o disco no barramento SCSI virtual Hyper-V (endereço 0:0:0:4),
+   identificando-o como 'Msft Virtual Disk' (revisão 1.0) com 2.147.483.648 setores
+   lógicos de 512 bytes (1,00 TiB / 1,10 TB) e blocos físicos de 4096 bytes.
+   Em /proc/partitions, consta apenas a entrada inteira 'sde' (1.073.741.824 blocos
+   de 1 KiB), sem subpartições (como sde1), pois o volume VHDX do ambiente WSL2
+   é formatado diretamente em ext4 no dispositivo completo (UUID=ddab76b4-1c7e-4755-9232-39ed3c246e3b).
+
+================================================================================
+SEÇÃO 3: ORGANIZAÇÃO NA HIERARQUIA DE BLOCK DEVICES E SYSFS
+================================================================================
+[Comandos executados]
+- lsblk -o NAME,MAJ:MIN,RM,SIZE,RO,TYPE,FSTYPE,MODEL,MOUNTPOINTS | grep -E 'NAME|sde' > analise_dispositivo/etapa3_hierarquia_bloco.txt
+- ls -la /sys/block | grep sde >> analise_dispositivo/etapa3_hierarquia_bloco.txt
+- head -n 1 /sys/block/sde/{dev,size,ro,removable,device/vendor,device/model,queue/logical_block_size,queue/physical_block_size} >> analise_dispositivo/etapa3_hierarquia_bloco.txt
+- mount | grep /dev/sde >> analise_dispositivo/etapa3_hierarquia_bloco.txt
+
+[Finalidade de cada comando]
+- lsblk -o ...         : Apresenta a hierarquia de block devices com colunas customizadas
+                         de identificação, capacidade, tipo, filesystem, modelo e montagem.
+- ls -la /sys/block    : Confirma o registro do dispositivo na classe 'block' do sysfs.
+- head -n 1 /sys/...   : Lê atributos diretos do dispositivo expostos pelo kernel no sysfs.
+- mount | grep ...     : Confirma os pontos de montagem ativos associados ao dispositivo.
+
+[Principais informações obtidas]
+# Etapa C - Hierarquia de block devices (lsblk) e atributos no sysfs (/sys/block/sde)
+$ lsblk -o NAME,MAJ:MIN,RM,SIZE,RO,TYPE,FSTYPE,MODEL,MOUNTPOINTS | grep -E 'NAME|sde'
+NAME  MAJ:MIN RM   SIZE RO TYPE FSTYPE  MODEL        MOUNTPOINTS
+sde     8:64   0     1T  0 disk ext4    Virtual Disk /etc/hosts
+
+$ ls -la /sys/block | grep sde
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 sde -> ../devices/LNXSYSTM:00/LNXSYBUS:00/ACPI0004:00/MSFT1000:00/fd1d2cbd-ce7c-535c-966b-eb5f811c95f0/host0/target0:0:0/0:0:0:4/block/sde
+
+$ head -n 1 /sys/block/sde/dev /sys/block/sde/size /sys/block/sde/ro /sys/block/sde/removable /sys/block/sde/device/vendor /sys/block/sde/device/model /sys/block/sde/queue/logical_block_size /sys/block/sde/queue/physical_block_size
+==> /sys/block/sde/dev <==
+8:64
+
+==> /sys/block/sde/size <==
+2147483648
+
+==> /sys/block/sde/ro <==
+0
+
+==> /sys/block/sde/removable <==
+0
+
+==> /sys/block/sde/device/vendor <==
+Msft    
+
+==> /sys/block/sde/device/model <==
+Virtual Disk    
+
+==> /sys/block/sde/queue/logical_block_size <==
+512
+
+==> /sys/block/sde/queue/physical_block_size <==
+4096
+
+$ mount | grep /dev/sde
+/dev/sde on /etc/resolv.conf type ext4 (rw,relatime)
+/dev/sde on /etc/hostname type ext4 (rw,relatime)
+/dev/sde on /etc/hosts type ext4 (rw,relatime)
+
+-> Síntese da Seção 3:
+   Na árvore de dispositivos de bloco, 'sde' aparece como dispositivo raiz do tipo
+   'disk' (MAJ:MIN 8:64), tamanho 1T, leitura/escrita (RO=0), fixo (RM=0), filesystem
+   'ext4', modelo 'Virtual Disk', com setores lógicos de 512B e físicos de 4096B.
+
+================================================================================
+SEÇÃO 4: INVESTIGAÇÃO DOS COMANDOS COM COMANDOS AUXILIARES
+================================================================================
+[Comandos executados]
+- type lsblk udevadm journalctl > analise_dispositivo/etapa4_comando_auxiliar.txt
+- which lsblk udevadm journalctl >> analise_dispositivo/etapa4_comando_auxiliar.txt
+- whatis lsblk udevadm journalctl >> analise_dispositivo/etapa4_comando_auxiliar.txt
+- man lsblk | head -n 25 >> analise_dispositivo/etapa4_comando_auxiliar.txt
+
+[Finalidade de cada comando]
+- type   : Informa como o shell Bash resolve cada comando (builtin, alias ou binário externo).
+- which  : Localiza o caminho absoluto do executável nos diretórios listados em $PATH.
+- whatis : Exibe o resumo de uma linha do banco de páginas de manual (man-db).
+- man    : Abre a documentação oficial completa do utilitário (seção 8 — administração).
+
+[Principais informações obtidas]
+# Etapa D - Investigacao dos comandos utilizados com comandos auxiliares
+$ type lsblk udevadm journalctl
+lsblk is /usr/bin/lsblk
+udevadm is hashed (/usr/bin/udevadm)
+journalctl is /usr/bin/journalctl
+
+$ which lsblk udevadm journalctl
+/usr/bin/lsblk
+/usr/bin/udevadm
+/usr/bin/journalctl
+
+$ whatis lsblk udevadm journalctl
+lsblk (8)            - list block devices
+udevadm (8)          - udev management tool
+journalctl (1)       - Query the systemd journal
+
+$ man lsblk | head -n 25
+LSBLK(8)                     System Administration                    LSBLK(8)
+
+NAME
+       lsblk - list block devices
+
+SYNOPSIS
+       lsblk [options] [device...]
+
+DESCRIPTION
+       lsblk lists information about all available or the specified block
+       devices. The lsblk command reads the sysfs filesystem and udev db to
+       gather information. If the udev db is not available or lsblk is
+       compiled without udev support, then it tries to read LABELs, UUIDs and
+       filesystem types from the block device. In this case root permissions
+       are necessary.
+
+       The command prints all block devices (except RAM disks) in a tree-like
+       format by default. Use lsblk --help to get a list of all available
+       columns.
+
+       The default output, as well as the default output from options like
+       --fs and --topology, is subject to change. So whenever possible, you
+       should avoid using default outputs in your scripts. Always explicitly
+       define expected columns by using --output columns-list and --list in
+       environments where a stable output is required.
+
+-> Síntese da Seção 4:
+   Todos os três utilitários investigados ('lsblk', 'udevadm' e 'journalctl') são
+   binários executáveis externos instalados em /usr/bin, pertencentes aos pacotes
+   fundamentais 'util-linux' e 'systemd', com documentação completa disponível no
+   manual do sistema (man 8 lsblk).
+
+================================================================================
+CONCLUSÃO GERAL DA AUDITORIA DE ARMAZENAMENTO
+================================================================================
+A integração de /dev, journalctl -k, /proc/partitions, udevadm info, /sys/block,
+lsblk, mount e comandos auxiliares de documentação permitiu traçar de ponta a ponta
+o ciclo de vida do dispositivo /dev/sde no Linux: desde a detecção de hardware pelo
+driver SCSI (Major 8), exposição de atributos via sysfs e enriquecimento de metadados
+pelo udev, até a disponibilização lógica do sistema de arquivos ext4 ao usuário.
+================================================================================

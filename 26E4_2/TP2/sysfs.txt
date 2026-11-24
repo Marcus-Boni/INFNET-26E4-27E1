@@ -1,0 +1,124 @@
+================================================================================
+EXERCÍCIO 6: EXPLORAÇÃO DO SYSFS (/sys/block)
+================================================================================
+Aluno: Marcus Boni
+
+1. LISTAGEM DOS DISPOSITIVOS DE BLOCO DISPONÍVEIS EM /sys/block
+--------------------------------------------------------------------------------
+O sysfs é um sistema de arquivos virtual mantido em memória pelo kernel Linux e
+montado em /sys. Ele expõe a hierarquia de dispositivos, barramentos, drivers e
+seus atributos diretamente para o espaço de usuário:
+
+marcus@ubuntu-wsl:~$ ls -la /sys/block
+total 0
+drwxr-xr-x  2 root root 0 Nov 24 00:26 .
+dr-xr-xr-x 13 root root 0 Nov 24 00:25 ..
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 loop0 -> ../devices/virtual/block/loop0
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 loop1 -> ../devices/virtual/block/loop1
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 loop2 -> ../devices/virtual/block/loop2
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 loop3 -> ../devices/virtual/block/loop3
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 loop4 -> ../devices/virtual/block/loop4
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 loop5 -> ../devices/virtual/block/loop5
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 loop6 -> ../devices/virtual/block/loop6
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 loop7 -> ../devices/virtual/block/loop7
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram0 -> ../devices/virtual/block/ram0
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram1 -> ../devices/virtual/block/ram1
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram10 -> ../devices/virtual/block/ram10
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram11 -> ../devices/virtual/block/ram11
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram12 -> ../devices/virtual/block/ram12
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram13 -> ../devices/virtual/block/ram13
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram14 -> ../devices/virtual/block/ram14
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram15 -> ../devices/virtual/block/ram15
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram2 -> ../devices/virtual/block/ram2
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram3 -> ../devices/virtual/block/ram3
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram4 -> ../devices/virtual/block/ram4
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram5 -> ../devices/virtual/block/ram5
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram6 -> ../devices/virtual/block/ram6
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram7 -> ../devices/virtual/block/ram7
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram8 -> ../devices/virtual/block/ram8
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 ram9 -> ../devices/virtual/block/ram9
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 sda -> ../devices/LNXSYSTM:00/LNXSYBUS:00/ACPI0004:00/MSFT1000:00/fd1d2cbd-ce7c-535c-966b-eb5f811c95f0/host0/target0:0:0/0:0:0:0/block/sda
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 sdb -> ../devices/LNXSYSTM:00/LNXSYBUS:00/ACPI0004:00/MSFT1000:00/fd1d2cbd-ce7c-535c-966b-eb5f811c95f0/host0/target0:0:0/0:0:0:1/block/sdb
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 sdc -> ../devices/LNXSYSTM:00/LNXSYBUS:00/ACPI0004:00/MSFT1000:00/fd1d2cbd-ce7c-535c-966b-eb5f811c95f0/host0/target0:0:0/0:0:0:2/block/sdc
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 sdd -> ../devices/LNXSYSTM:00/LNXSYBUS:00/ACPI0004:00/MSFT1000:00/fd1d2cbd-ce7c-535c-966b-eb5f811c95f0/host0/target0:0:0/0:0:0:3/block/sdd
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 sde -> ../devices/LNXSYSTM:00/LNXSYBUS:00/ACPI0004:00/MSFT1000:00/fd1d2cbd-ce7c-535c-966b-eb5f811c95f0/host0/target0:0:0/0:0:0:4/block/sde
+
+2. DISPOSITIVO ESCOLHIDO E ESTRUTURA DE ATRIBUTOS NO SYSFS
+--------------------------------------------------------------------------------
+Dispositivo selecionado: sde (/sys/block/sde)
+
+marcus@ubuntu-wsl:~$ ls -la /sys/block/sde/
+total 0
+drwxr-xr-x  9 root root    0 Nov 24 00:26 .
+drwxr-xr-x  3 root root    0 Nov 24 00:26 ..
+-r--r--r--  1 root root 4096 Nov 24 00:26 alignment_offset
+lrwxrwxrwx  1 root root    0 Nov 24 00:26 bdi -> ../../../../../../../../../../virtual/bdi/8:64
+-r--r--r--  1 root root 4096 Nov 24 00:26 capability
+-r--r--r--  1 root root 4096 Nov 24 00:26 dev
+lrwxrwxrwx  1 root root    0 Nov 24 00:26 device -> ../../../0:0:0:4
+-r--r--r--  1 root root 4096 Nov 24 00:26 discard_alignment
+-r--r--r--  1 root root 4096 Nov 24 00:26 diskseq
+-r--r--r--  1 root root 4096 Nov 24 00:26 events
+-r--r--r--  1 root root 4096 Nov 24 00:26 events_async
+-rw-r--r--  1 root root 4096 Nov 24 00:26 events_poll_msecs
+-r--r--r--  1 root root 4096 Nov 24 00:26 ext_range
+-r--r--r--  1 root root 4096 Nov 24 00:26 hidden
+drwxr-xr-x  2 root root    0 Nov 24 00:26 holders
+-r--r--r--  1 root root 4096 Nov 24 00:26 inflight
+drwxr-xr-x  2 root root    0 Nov 24 00:26 integrity
+drwxr-xr-x 18 root root    0 Nov 24 00:26 mq
+-r--r--r--  1 root root 4096 Nov 24 00:26 partscan
+drwxr-xr-x  2 root root    0 Nov 24 00:26 power
+drwxr-xr-x  2 root root    0 Nov 24 00:26 queue
+-r--r--r--  1 root root 4096 Nov 24 00:26 range
+-r--r--r--  1 root root 4096 Nov 24 00:26 removable
+-r--r--r--  1 root root 4096 Nov 24 00:26 ro
+-r--r--r--  1 root root 4096 Nov 24 00:26 size
+drwxr-xr-x  2 root root    0 Nov 24 00:26 slaves
+-r--r--r--  1 root root 4096 Nov 24 00:26 stat
+lrwxrwxrwx  1 root root    0 Nov 24 00:26 subsystem -> ../../../../../../../../../../../class/block
+drwxr-xr-x  2 root root    0 Nov 24 00:26 trace
+-rw-r--r--  1 root root 4096 Nov 24 00:26 uevent
+
+3. LEITURA DE ATRIBUTOS DO DISPOSITIVO /sys/block/sde
+--------------------------------------------------------------------------------
+marcus@ubuntu-wsl:~$ cat /sys/block/sde/dev
+8:64
+
+marcus@ubuntu-wsl:~$ cat /sys/block/sde/size
+2147483648
+
+marcus@ubuntu-wsl:~$ cat /sys/block/sde/ro
+0
+
+marcus@ubuntu-wsl:~$ cat /sys/block/sde/removable
+0
+
+marcus@ubuntu-wsl:~$ cat /sys/block/sde/device/vendor
+Msft    
+
+marcus@ubuntu-wsl:~$ cat /sys/block/sde/device/model
+Virtual Disk    
+
+marcus@ubuntu-wsl:~$ cat /sys/block/sde/queue/logical_block_size
+512
+
+marcus@ubuntu-wsl:~$ cat /sys/block/sde/queue/physical_block_size
+4096
+
+marcus@ubuntu-wsl:~$ cat /sys/block/sde/queue/rotational
+1
+
+marcus@ubuntu-wsl:~$ cat /sys/block/sde/stat
+   22148     4046  1117154    14122   147709   347856 14663296  8226427        0   113896  8334077    10067     1152 2119441792      915    68344    92612
+
+4. INTERPRETAÇÃO TÉCNICA DOS ATRIBUTOS LIDOS
+--------------------------------------------------------------------------------
+- dev                     : 8:64 (Major 8 = driver SCSI disk 'sd'; Minor 64 = disco sde).
+- size                    : 2147483648 setores de 512 bytes = 1099511627776 bytes (~1024 GiB / 1 TiB).
+- ro                      : 0 (0 indica dispositivo habilitado para leitura e escrita).
+- removable               : 0 (0 indica disco fixo / não removível).
+- device/vendor e model   : Fabricante 'Msft' | Modelo 'Virtual Disk'.
+- logical/physical_block  : Setor lógico de 512 B e setor físico de 4096 B (4K aligned).
+- stat                    : Contadores em tempo real de operações de leitura/escrita (I/O) do kernel.
+================================================================================

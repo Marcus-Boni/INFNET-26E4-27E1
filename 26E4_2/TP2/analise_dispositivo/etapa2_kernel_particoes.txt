@@ -1,0 +1,38 @@
+# Etapa B - Reconhecimento do dispositivo sde pelo kernel, udev e particoes
+$ journalctl -k --no-pager | grep -iE 'sde|0:0:0:4'
+Nov 24 00:26:08 ubuntu-wsl kernel: scsi 0:0:0:4: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: Attached scsi generic sg4 type 0
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] 2147483648 512-byte logical blocks: (1.10 TB/1.00 TiB)
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] 4096-byte physical blocks
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Write Protect is off
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Mode Sense: 0f 00 00 00
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Attached SCSI disk
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Synchronizing SCSI cache
+Nov 24 00:26:08 ubuntu-wsl kernel: scsi 0:0:0:4: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: Attached scsi generic sg4 type 0
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] 2147483648 512-byte logical blocks: (1.10 TB/1.00 TiB)
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] 4096-byte physical blocks
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Write Protect is off
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Mode Sense: 0f 00 00 00
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Attached SCSI disk
+Nov 24 00:26:08 ubuntu-wsl kernel: EXT4-fs (sde): recovery complete
+Nov 24 00:26:08 ubuntu-wsl kernel: EXT4-fs (sde): mounted filesystem ddab76b4-1c7e-4755-9232-39ed3c246e3b r/w with ordered data mode. Quota mode: none.
+Nov 24 00:26:08 ubuntu-wsl kernel: block sde: the capability attribute has been deprecated.
+
+$ cat /proc/partitions | grep -E 'major|sde'
+major minor  #blocks  name
+   8       64 1073741824 sde
+
+$ udevadm info --query=all --name=/dev/sde | grep -E 'DEVNAME|DEVTYPE|MAJOR|MINOR|SUBSYSTEM|ID_VENDOR=|ID_MODEL=|ID_BUS|ID_FS_TYPE|ID_FS_UUID='
+E: DEVNAME=/dev/sde
+E: DEVTYPE=disk
+E: MAJOR=8
+E: MINOR=64
+E: SUBSYSTEM=block
+E: ID_VENDOR=Msft
+E: ID_MODEL=Virtual_Disk
+E: ID_BUS=scsi
+E: ID_FS_UUID=ddab76b4-1c7e-4755-9232-39ed3c246e3b
+E: ID_FS_TYPE=ext4

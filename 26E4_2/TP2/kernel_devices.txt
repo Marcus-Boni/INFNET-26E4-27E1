@@ -1,0 +1,98 @@
+================================================================================
+EXERCÍCIO 8: MENSAGENS DO KERNEL E HARDWARE (journalctl -k)
+================================================================================
+Aluno: Marcus Boni
+
+1. COMANDOS EXECUTADOS
+--------------------------------------------------------------------------------
+# Visualizar as mensagens do kernel (ring buffer via systemd-journald):
+marcus@ubuntu-wsl:~$ journalctl -k --no-pager
+
+# Filtrar mensagens relacionadas a dispositivos de armazenamento e salvar em kernel_devices.txt:
+marcus@ubuntu-wsl:~$ journalctl -k --no-pager | grep -iE 'scsi|sd [0-9]|\[sd[a-z]\]|\bblock\b|blocks:|ext4|storvsc|disk|loop:' > kernel_devices.txt
+
+Total de eventos de armazenamento filtrados: 67 linhas
+
+2. MENSAGENS DO KERNEL RELACIONADAS A DISPOSITIVOS DE ARMAZENAMENTO
+--------------------------------------------------------------------------------
+Nov 24 00:26:08 ubuntu-wsl kernel: RAMDISK: [mem 0x04be4000-0x04e8bfff]
+Nov 24 00:26:08 ubuntu-wsl kernel: x86/mm: Memory block size: 128MB
+Nov 24 00:26:08 ubuntu-wsl kernel: ACPI: Enabled 2 GPEs in block 00 to 0F
+Nov 24 00:26:08 ubuntu-wsl kernel: SCSI subsystem initialized
+Nov 24 00:26:08 ubuntu-wsl kernel: VFS: Disk quotas dquot_6.6.0
+Nov 24 00:26:08 ubuntu-wsl kernel: Block layer SCSI generic (bsg) driver version 0.4 loaded (major 245)
+Nov 24 00:26:08 ubuntu-wsl kernel: loop: module loaded
+Nov 24 00:26:08 ubuntu-wsl kernel: Loading iSCSI transport class v2.0-870.
+Nov 24 00:26:08 ubuntu-wsl kernel: VMware PVSCSI driver - version 1.0.7.0-k
+Nov 24 00:26:08 ubuntu-wsl kernel: hv_vmbus: registering driver hv_storvsc
+Nov 24 00:26:08 ubuntu-wsl kernel: scsi host0: storvsc_host_t
+Nov 24 00:26:08 ubuntu-wsl kernel: scsi 0:0:0:0: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+Nov 24 00:26:08 ubuntu-wsl kernel: scsi 0:0:0:1: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:0: Attached scsi generic sg0 type 0
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:0: [sda] 795880 512-byte logical blocks: (407 MB/389 MiB)
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:1: Attached scsi generic sg1 type 0
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:1: [sdb] 381016 512-byte logical blocks: (195 MB/186 MiB)
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:0: [sda] Write Protect is on
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:0: [sda] Mode Sense: 0f 00 80 00
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:0: [sda] Write cache: disabled, read cache: enabled, doesn't support DPO or FUA
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:1: [sdb] Write Protect is on
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:1: [sdb] Mode Sense: 0f 00 80 00
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:0: [sda] Attached SCSI disk
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:1: [sdb] Write cache: disabled, read cache: enabled, doesn't support DPO or FUA
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:1: [sdb] Attached SCSI disk
+Nov 24 00:26:08 ubuntu-wsl kernel: scsi 0:0:0:2: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:2: Attached scsi generic sg2 type 0
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:2: [sdc] 8388616 512-byte logical blocks: (4.29 GB/4.00 GiB)
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:2: [sdc] 4096-byte physical blocks
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:2: [sdc] Write Protect is off
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:2: [sdc] Mode Sense: 0f 00 00 00
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:2: [sdc] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:2: [sdc] Attached SCSI disk
+Nov 24 00:26:08 ubuntu-wsl kernel: EXT4-fs (sda): mounted filesystem 00000000-0000-0000-0000-000000000000 ro without journal. Quota mode: none.
+Nov 24 00:26:08 ubuntu-wsl kernel: EXT4-fs (sdb): mounted filesystem 00000000-0000-0000-0000-000000000000 ro without journal. Quota mode: none.
+Nov 24 00:26:08 ubuntu-wsl kernel: scsi 0:0:0:3: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:3: Attached scsi generic sg3 type 0
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:3: [sdd] 289720 512-byte logical blocks: (148 MB/141 MiB)
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:3: [sdd] Write Protect is off
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:3: [sdd] Mode Sense: 0f 00 00 00
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:3: [sdd] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:3: [sdd] Attached SCSI disk
+Nov 24 00:26:08 ubuntu-wsl kernel: EXT4-fs (sdd): mounted filesystem 781e4043-9597-4e20-95c8-8d27bcd5fcdb r/w with ordered data mode. Quota mode: none.
+Nov 24 00:26:08 ubuntu-wsl kernel: scsi 0:0:0:4: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: Attached scsi generic sg4 type 0
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] 2147483648 512-byte logical blocks: (1.10 TB/1.00 TiB)
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] 4096-byte physical blocks
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Write Protect is off
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Mode Sense: 0f 00 00 00
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Attached SCSI disk
+Nov 24 00:26:08 ubuntu-wsl kernel: EXT4-fs (sdd): unmounting filesystem 781e4043-9597-4e20-95c8-8d27bcd5fcdb.
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Synchronizing SCSI cache
+Nov 24 00:26:08 ubuntu-wsl kernel: EXT4-fs (sdd): mounted filesystem 781e4043-9597-4e20-95c8-8d27bcd5fcdb r/w with ordered data mode. Quota mode: none.
+Nov 24 00:26:08 ubuntu-wsl kernel: EXT4-fs (sdd): unmounting filesystem 781e4043-9597-4e20-95c8-8d27bcd5fcdb.
+Nov 24 00:26:08 ubuntu-wsl kernel: EXT4-fs (sdd): mounted filesystem 781e4043-9597-4e20-95c8-8d27bcd5fcdb r/w with ordered data mode. Quota mode: none.
+Nov 24 00:26:08 ubuntu-wsl kernel: scsi 0:0:0:4: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: Attached scsi generic sg4 type 0
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] 2147483648 512-byte logical blocks: (1.10 TB/1.00 TiB)
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] 4096-byte physical blocks
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Write Protect is off
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Mode Sense: 0f 00 00 00
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+Nov 24 00:26:08 ubuntu-wsl kernel: sd 0:0:0:4: [sde] Attached SCSI disk
+Nov 24 00:26:08 ubuntu-wsl kernel: EXT4-fs (sde): recovery complete
+Nov 24 00:26:08 ubuntu-wsl kernel: EXT4-fs (sde): mounted filesystem ddab76b4-1c7e-4755-9232-39ed3c246e3b r/w with ordered data mode. Quota mode: none.
+Nov 24 00:26:08 ubuntu-wsl kernel: block sde: the capability attribute has been deprecated.
+
+3. ANÁLISE TÉCNICA DAS MENSAGENS COLETADAS
+--------------------------------------------------------------------------------
+As mensagens do kernel registradas via 'journalctl -k' evidenciam o ciclo de
+inicialização da pilha de armazenamento do Linux:
+1) Inicialização do subsistema SCSI ('SCSI subsystem initialized') e da camada
+   de dispositivos de bloco ('Block layer SCSI generic (bsg) driver').
+2) Carregamento do adaptador virtual SCSI do Hyper-V ('scsi host0: storvsc_host_t').
+3) Enumeração dos discos virtuais SCSI ('Msft Virtual Disk 1.0') nos barramentos
+   0:0:0:0 a 0:0:0:4 e vinculação pelo driver 'sd' aos nós [sda], [sdb], [sdc],
+   [sdd] e [sde], com anúncio da geometria de blocos lógicos (512B) e físicos (4096B).
+4) Reconhecimento e montagem do sistema de arquivos EXT4 ('EXT4-fs') sobre os
+   volumes de armazenamento detectados.
+================================================================================

@@ -1,0 +1,42 @@
+# Etapa D - Investigacao dos comandos utilizados com comandos auxiliares
+$ type lsblk udevadm journalctl
+lsblk is /usr/bin/lsblk
+udevadm is hashed (/usr/bin/udevadm)
+journalctl is /usr/bin/journalctl
+
+$ which lsblk udevadm journalctl
+/usr/bin/lsblk
+/usr/bin/udevadm
+/usr/bin/journalctl
+
+$ whatis lsblk udevadm journalctl
+lsblk (8)            - list block devices
+udevadm (8)          - udev management tool
+journalctl (1)       - Query the systemd journal
+
+$ man lsblk | head -n 25
+LSBLK(8)                     System Administration                    LSBLK(8)
+
+NAME
+       lsblk - list block devices
+
+SYNOPSIS
+       lsblk [options] [device...]
+
+DESCRIPTION
+       lsblk lists information about all available or the specified block
+       devices. The lsblk command reads the sysfs filesystem and udev db to
+       gather information. If the udev db is not available or lsblk is
+       compiled without udev support, then it tries to read LABELs, UUIDs and
+       filesystem types from the block device. In this case root permissions
+       are necessary.
+
+       The command prints all block devices (except RAM disks) in a tree-like
+       format by default. Use lsblk --help to get a list of all available
+       columns.
+
+       The default output, as well as the default output from options like
+       --fs and --topology, is subject to change. So whenever possible, you
+       should avoid using default outputs in your scripts. Always explicitly
+       define expected columns by using --output columns-list and --list in
+       environments where a stable output is required.

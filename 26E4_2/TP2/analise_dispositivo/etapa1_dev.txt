@@ -1,0 +1,9 @@
+# Etapa A - Representacao do dispositivo sde no diretorio /dev
+$ ls -la /dev | grep -E '\bsde\b'
+brw-rw----  1 root disk      8,  64 Nov 24 00:26 sde
+
+$ ls -la /dev/disk/by-id /dev/disk/by-path /dev/disk/by-uuid | grep sde
+lrwxrwxrwx 1 root root   9 Nov 24 00:26 scsi-360022480496e4607afffef820ca96e5b -> ../../sde
+lrwxrwxrwx 1 root root   9 Nov 24 00:26 wwn-0x60022480496e4607afffef820ca96e5b -> ../../sde
+lrwxrwxrwx 1 root root   9 Nov 24 00:26 acpi-MSFT1000:00-scsi-0:0:0:4 -> ../../sde
+lrwxrwxrwx 1 root root   9 Nov 24 00:26 ddab76b4-1c7e-4755-9232-39ed3c246e3b -> ../../sde

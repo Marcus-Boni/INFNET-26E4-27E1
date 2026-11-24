@@ -1,0 +1,125 @@
+================================================================================
+EXERCÍCIO 2: PIPELINES E REDIRECIONAMENTO BÁSICO
+================================================================================
+Aluno: Marcus Boni
+
+1. COMANDOS EXECUTADOS NO FLUXO DE PIPELINE E REDIRECIONAMENTO
+--------------------------------------------------------------------------------
+# Passo 1: Listar os arquivos presentes no diretório /etc
+marcus@ubuntu-wsl:~$ ls /etc
+
+# Passo 2: Utilizar um pipeline (|) para paginar a saída com 'less'
+marcus@ubuntu-wsl:~$ ls -la /etc | less
+
+# Passo 3: Redirecionar (>) a saída da listagem de /etc para pipeline.txt
+marcus@ubuntu-wsl:~$ ls -la /etc > pipeline.txt
+
+# Passo 4: Verificar o conteúdo do arquivo gerado utilizando 'less'
+marcus@ubuntu-wsl:~$ less pipeline.txt
+
+Resumo de verificação quantitativa:
+marcus@ubuntu-wsl:~$ wc -l pipeline.txt
+99 pipeline.txt
+
+2. SAÍDA REDIRECIONADA DA LISTAGEM DO DIRETÓRIO /etc (CONTEÚDO DE pipeline.txt)
+--------------------------------------------------------------------------------
+total 464
+drwxr-xr-x 1 root root    4096 Nov 24 00:26 .
+drwxr-xr-x 1 root root    4096 Nov 24 00:25 ..
+-rw------- 1 root root       0 Nov 14 14:04 .pwd.lock
+-rw-r--r-- 1 root root    3028 Nov 14 14:04 adduser.conf
+drwxr-xr-x 1 root root    4096 Nov 24 00:26 alternatives
+drwxr-xr-x 3 root root    4096 Nov 24 00:26 apparmor.d
+drwxr-xr-x 8 root root    4096 Nov 14 14:04 apt
+-rw-r--r-- 1 root root    2319 Jan  6  2022 bash.bashrc
+-rw-r--r-- 1 root root     367 Dec 16  2020 bindresvport.blacklist
+drwxr-xr-x 2 root root    4096 Oct 12 07:44 binfmt.d
+drwxr-xr-x 2 root root    4096 Nov 14 14:11 cloud
+drwxr-xr-x 2 root root    4096 Nov 14 14:11 cron.d
+drwxr-xr-x 1 root root    4096 Nov 24 00:26 cron.daily
+drwxr-xr-x 2 root root    4096 Nov 24 00:26 cron.weekly
+drwxr-xr-x 4 root root    4096 Nov 24 00:26 dbus-1
+-rw-r--r-- 1 root root    2969 Feb 20  2022 debconf.conf
+-rw-r--r-- 1 root root      13 Aug 22  2021 debian_version
+drwxr-xr-x 1 root root    4096 Nov 24 00:26 default
+-rw-r--r-- 1 root root     604 Sep 15  2018 deluser.conf
+drwxr-xr-x 3 root root    4096 Nov 24 00:26 dhcp
+drwxr-xr-x 1 root root    4096 Nov 14 14:11 dpkg
+-rw-r--r-- 1 root root     685 Jan  8  2022 e2scrub.conf
+-rw-r--r-- 1 root root     106 Nov 14 14:04 environment
+-rw-r--r-- 1 root root      37 Nov 14 14:04 fstab
+-rw-r--r-- 1 root root    2584 Feb  3  2022 gai.conf
+drwxr-xr-x 2 root root    4096 Nov 24 00:26 groff
+-rw-r--r-- 1 root root     621 Nov 24 00:26 group
+-rw-r--r-- 1 root root     606 Nov 24 00:26 group-
+-rw-r----- 1 root shadow   518 Nov 24 00:26 gshadow
+-rw-r----- 1 root shadow   507 Nov 24 00:26 gshadow-
+drwxr-xr-x 3 root root    4096 Feb 21  2022 gss
+-rw-r--r-- 1 root root      92 Oct 15  2021 host.conf
+-rw-r--r-- 1 root root      11 Nov 24 00:25 hostname
+-rw-r--r-- 1 root root     170 Nov 24 00:25 hosts
+drwxr-xr-x 1 root root    4096 Nov 24 00:26 init.d
+-rw-r--r-- 1 root root    1748 Jan  6  2022 inputrc
+-rw-r--r-- 1 root root      26 Sep 10  2024 issue
+-rw-r--r-- 1 root root      19 Sep 10  2024 issue.net
+drwxr-xr-x 1 root root    4096 Nov 24 00:26 kernel
+-rw-r--r-- 1 root root    7564 Nov 24 00:26 ld.so.cache
+-rw-r--r-- 1 root root      34 Dec 16  2020 ld.so.conf
+drwxr-xr-x 2 root root    4096 Nov 14 14:11 ld.so.conf.d
+-rw-r--r-- 1 root root     267 Oct 15  2021 legal
+-rw-r--r-- 1 root root     191 Mar 17  2022 libaudit.conf
+-rw-r--r-- 1 root root   10734 Nov 11  2021 login.defs
+drwxr-xr-x 2 root root    4096 Nov 14 14:11 logrotate.d
+-rw-r--r-- 1 root root     104 Sep 10  2024 lsb-release
+-rw-r--r-- 1 root root      33 Nov 24 00:26 machine-id
+-rw-r--r-- 1 root root     111 Sep 11  2023 magic
+-rw-r--r-- 1 root root     111 Sep 11  2023 magic.mime
+-rw-r--r-- 1 root root    5217 Mar 17  2022 manpath.config
+-rw-r--r-- 1 root root   72029 Mar 21  2022 mime.types
+-rw-r--r-- 1 root root     744 Jan  8  2022 mke2fs.conf
+drwxr-xr-x 2 root root    4096 Nov 24 00:26 modules-load.d
+lrwxrwxrwx 1 root root      19 Nov 24 00:26 mtab -> ../proc/self/mounts
+-rw-r--r-- 1 root root     767 Mar 24  2022 netconfig
+drwxr-xr-x 8 root root    4096 Nov 24 00:26 networkd-dispatcher
+-rw-r--r-- 1 root root      91 Oct 15  2021 networks
+-rw-r--r-- 1 root root     494 Dec 16  2020 nsswitch.conf
+drwxr-xr-x 2 root root    4096 Nov 14 14:04 opt
+lrwxrwxrwx 1 root root      21 Sep 10  2024 os-release -> ../usr/lib/os-release
+-rw-r--r-- 1 root root     552 Aug 12  2020 pam.conf
+drwxr-xr-x 1 root root    4096 Nov 24 00:25 pam.d
+-rw-r--r-- 1 root root    1272 Nov 24 00:26 passwd
+-rw-r--r-- 1 root root    1229 Nov 24 00:26 passwd-
+-rw-r--r-- 1 root root     582 Oct 15  2021 profile
+drwxr-xr-x 2 root root    4096 Nov 14 14:11 profile.d
+drwxr-xr-x 2 root root    4096 Nov 24 00:26 python3
+drwxr-xr-x 2 root root    4096 Nov 24 00:25 python3.10
+drwxr-xr-x 1 root root    4096 Nov 24 00:26 rc0.d
+drwxr-xr-x 2 root root    4096 Feb 15  2022 rc1.d
+drwxr-xr-x 1 root root    4096 Nov 24 00:26 rc2.d
+drwxr-xr-x 1 root root    4096 Nov 24 00:26 rc3.d
+drwxr-xr-x 1 root root    4096 Nov 24 00:26 rc4.d
+drwxr-xr-x 1 root root    4096 Nov 24 00:26 rc5.d
+drwxr-xr-x 1 root root    4096 Nov 24 00:26 rc6.d
+drwxr-xr-x 1 root root    4096 Nov 24 00:26 rcS.d
+-rw-r--r-- 1 root root     222 Nov 24 00:25 resolv.conf
+lrwxrwxrwx 1 root root      13 Jul 20 14:42 rmt -> /usr/sbin/rmt
+drwxr-xr-x 4 root root    4096 Nov 14 14:11 security
+drwxr-xr-x 2 root root    4096 Nov 14 14:08 selinux
+-rw-r----- 1 root shadow   673 Nov 24 00:26 shadow
+-rw-r----- 1 root shadow   645 Nov 24 00:26 shadow-
+-rw-r--r-- 1 root root     128 Nov 14 14:04 shells
+drwxr-xr-x 2 root root    4096 Nov 14 14:11 skel
+-rw-r--r-- 1 root root      20 Nov 24 00:26 subgid
+-rw-r--r-- 1 root root       0 Nov 14 14:04 subgid-
+-rw-r--r-- 1 root root      20 Nov 24 00:26 subuid
+-rw-r--r-- 1 root root       0 Nov 14 14:04 subuid-
+-rw-r--r-- 1 root root    2355 Feb 25  2022 sysctl.conf
+drwxr-xr-x 1 root root    4096 Nov 24 00:26 sysctl.d
+drwxr-xr-x 1 root root    4096 Nov 24 00:26 systemd
+drwxr-xr-x 2 root root    4096 Nov 14 14:11 terminfo
+drwxr-xr-x 2 root root    4096 Oct 12 07:44 tmpfiles.d
+drwxr-xr-x 4 root root    4096 Nov 24 00:26 udev
+drwxr-xr-x 2 root root    4096 Nov 14 14:11 update-motd.d
+-rw-r--r-- 1 root root     681 Mar 23  2022 xattr.conf
+drwxr-xr-x 4 root root    4096 Nov 24 00:26 xdg
+================================================================================

@@ -1,0 +1,37 @@
+# Etapa C - Hierarquia de block devices (lsblk) e atributos no sysfs (/sys/block/sde)
+$ lsblk -o NAME,MAJ:MIN,RM,SIZE,RO,TYPE,FSTYPE,MODEL,MOUNTPOINTS | grep -E 'NAME|sde'
+NAME  MAJ:MIN RM   SIZE RO TYPE FSTYPE  MODEL        MOUNTPOINTS
+sde     8:64   0     1T  0 disk ext4    Virtual Disk /etc/hosts
+
+$ ls -la /sys/block | grep sde
+lrwxrwxrwx  1 root root 0 Nov 24 00:26 sde -> ../devices/LNXSYSTM:00/LNXSYBUS:00/ACPI0004:00/MSFT1000:00/fd1d2cbd-ce7c-535c-966b-eb5f811c95f0/host0/target0:0:0/0:0:0:4/block/sde
+
+$ head -n 1 /sys/block/sde/dev /sys/block/sde/size /sys/block/sde/ro /sys/block/sde/removable /sys/block/sde/device/vendor /sys/block/sde/device/model /sys/block/sde/queue/logical_block_size /sys/block/sde/queue/physical_block_size
+==> /sys/block/sde/dev <==
+8:64
+
+==> /sys/block/sde/size <==
+2147483648
+
+==> /sys/block/sde/ro <==
+0
+
+==> /sys/block/sde/removable <==
+0
+
+==> /sys/block/sde/device/vendor <==
+Msft    
+
+==> /sys/block/sde/device/model <==
+Virtual Disk    
+
+==> /sys/block/sde/queue/logical_block_size <==
+512
+
+==> /sys/block/sde/queue/physical_block_size <==
+4096
+
+$ mount | grep /dev/sde
+/dev/sde on /etc/resolv.conf type ext4 (rw,relatime)
+/dev/sde on /etc/hostname type ext4 (rw,relatime)
+/dev/sde on /etc/hosts type ext4 (rw,relatime)

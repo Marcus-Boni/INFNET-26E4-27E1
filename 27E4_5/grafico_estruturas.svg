@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="880" height="420" fill="#ffffff" rx="8"/>
+  <text x="440" y="30" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2937">Desempenho e Memória: Hashtable vs. Pilha (LIFO) vs. Fila (FIFO)</text>
+
+  <!-- Painel Esquerdo: Tempo de Consulta -->
+  <text x="268" y="60" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">Tempo de Consulta por Posição (ms)</text>
+  <g stroke="#e5e7eb" stroke-width="1">
+    <line x1="65" y1="340" x2="470" y2="340"/>
+    <line x1="65" y1="255" x2="470" y2="255"/>
+    <line x1="65" y1="170" x2="470" y2="170"/>
+    <line x1="65" y1="85" x2="470" y2="85"/>
+  </g>
+  <line x1="65" y1="85" x2="65" y2="340" stroke="#374151" stroke-width="1.5"/>
+  <line x1="65" y1="340" x2="470" y2="340" stroke="#374151" stroke-width="1.5"/>
+  <g font-size="11" fill="#4b5563" text-anchor="end">
+    <text x="58" y="344">0</text>
+    <text x="58" y="259">10</text>
+    <text x="58" y="174">20</text>
+    <text x="58" y="89">30 ms</text>
+  </g>
+  <g font-size="11" fill="#4b5563" text-anchor="middle">
+    <text x="105" y="358">Pos 1</text>
+    <text x="185" y="358">Pos 100</text>
+    <text x="265" y="358">Pos 1000</text>
+    <text x="345" y="358">Pos 5000</text>
+    <text x="425" y="358">Pos 26055</text>
+  </g>
+
+  <!-- Barras Painel Esquerdo (largura 16, centro -26 / -8 / +10) -->
+  <!-- Hashtable (#2563eb) -->
+  <g fill="#2563eb">
+    <rect x="79" y="338" width="16" height="2"/>
+    <rect x="159" y="338" width="16" height="2"/>
+    <rect x="239" y="338" width="16" height="2"/>
+    <rect x="319" y="338" width="16" height="2"/>
+    <rect x="399" y="338" width="16" height="2"/>
+  </g>
+  <!-- Pilha (#dc2626) -->
+  <g fill="#dc2626">
+    <rect x="97" y="143.9" width="16" height="196.1"/>
+    <rect x="177" y="153.1" width="16" height="186.9"/>
+    <rect x="257" y="174.2" width="16" height="165.8"/>
+    <rect x="337" y="198.0" width="16" height="142.0"/>
+    <rect x="417" y="338" width="16" height="2"/>
+  </g>
+  <!-- Fila (#059669) -->
+  <g fill="#059669">
+    <rect x="115" y="338" width="16" height="2"/>
+    <rect x="195" y="147.8" width="16" height="192.2"/>
+    <rect x="275" y="144.9" width="16" height="195.1"/>
+    <rect x="355" y="108.0" width="16" height="232.0"/>
+    <rect x="435" y="149.4" width="16" height="190.6"/>
+  </g>
+
+  <!-- Painel Direito: Memória no Armazenamento -->
+  <text x="700" y="60" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">Memória no Armazenamento (26.055 itens)</text>
+  <g stroke="#e5e7eb" stroke-width="1">
+    <line x1="555" y1="340" x2="845" y2="340"/>
+    <line x1="555" y1="248.9" x2="845" y2="248.9"/>
+    <line x1="555" y1="157.9" x2="845" y2="157.9"/>
+    <line x1="555" y1="85" x2="845" y2="85"/>
+  </g>
+  <line x1="555" y1="85" x2="555" y2="340" stroke="#374151" stroke-width="1.5"/>
+  <line x1="555" y1="340" x2="845" y2="340" stroke="#374151" stroke-width="1.5"/>
+  <g font-size="11" fill="#4b5563" text-anchor="end">
+    <text x="548" y="344">0</text>
+    <text x="548" y="253">1000</text>
+    <text x="548" y="162">2000</text>
+    <text x="548" y="89">2800 KiB</text>
+  </g>
+  <g font-size="11" fill="#4b5563" text-anchor="middle">
+    <text x="605" y="358">Hashtable</text>
+    <text x="700" y="358">Pilha (LIFO)</text>
+    <text x="795" y="358">Fila (FIFO)</text>
+  </g>
+
+  <!-- Barras Painel Direito -->
+  <rect x="577" y="150.0" width="26" height="190.0" fill="#2563eb"/>
+  <rect x="607" y="109.5" width="26" height="230.5" fill="#93c5fd"/>
+  <text x="590" y="144" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">2086</text>
+  <text x="622" y="103" text-anchor="middle" font-size="10" font-weight="700" fill="#1d4ed8">2531 (pico)</text>
+
+  <rect x="687" y="320.5" width="26" height="19.5" fill="#dc2626"/>
+  <text x="700" y="314" text-anchor="middle" font-size="10" font-weight="700" fill="#991b1b">214 KiB</text>
+
+  <rect x="782" y="320.9" width="26" height="19.1" fill="#059669"/>
+  <text x="795" y="314" text-anchor="middle" font-size="10" font-weight="700" fill="#065f46">210 KiB</text>
+
+  <!-- Legenda Inferior -->
+  <g transform="translate(215, 386)" font-size="12" fill="#1f2937">
+    <rect x="0" y="0" width="14" height="14" fill="#2563eb" rx="2"/>
+    <text x="20" y="11" font-weight="600">Hashtable (dict)</text>
+    <rect x="145" y="0" width="14" height="14" fill="#dc2626" rx="2"/>
+    <text x="165" y="11" font-weight="600">Pilha (LIFO)</text>
+    <rect x="275" y="0" width="14" height="14" fill="#059669" rx="2"/>
+    <text x="295" y="11" font-weight="600">Fila (FIFO)</text>
+    <rect x="385" y="0" width="14" height="14" fill="#93c5fd" rx="2"/>
+    <text x="405" y="11">Pico temporário (Hashtable)</text>
+  </g>
+</svg>
+

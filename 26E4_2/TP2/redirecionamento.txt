@@ -1,0 +1,52 @@
+================================================================================
+EXERCÍCIO 4: REDIRECIONAMENTO E ABSTRAÇÃO DE DISPOSITIVOS (/dev/null)
+================================================================================
+Aluno: Marcus Boni
+
+1. INSPEÇÃO DO DISPOSITIVO ESPECIAL /dev/null
+--------------------------------------------------------------------------------
+No Linux, dispositivos são representados como arquivos especiais na árvore /dev.
+O /dev/null é um dispositivo de caractere (major 1, minor 3) conhecido como
+"bit bucket" ou "buraco negro de dados": toda escrita enviada a ele é descartada
+pelo kernel retornando sucesso (exit status 0), e toda leitura retorna EOF.
+
+marcus@ubuntu-wsl:~$ ls -la /dev/null
+crw-rw-rw- 1 root root 1, 3 Nov 24 00:26 /dev/null
+
+2. EXECUÇÃO DOS COMANDOS COM E SEM REDIRECIONAMENTO PARA /dev/null
+--------------------------------------------------------------------------------
+[Teste 1: Comando 'echo']
+a) Com redirecionamento da saída padrão (stdout) para /dev/null:
+marcus@ubuntu-wsl:~$ echo "Mensagem enviada para o dispositivo especial /dev/null" > /dev/null
+(nenhuma saída exibida no terminal — código de saída: 0)
+
+b) Executando novamente SEM redirecionamento:
+marcus@ubuntu-wsl:~$ echo "Mensagem enviada para o dispositivo especial /dev/null"
+Mensagem enviada para o dispositivo especial /dev/null
+
+[Teste 2: Comando 'uname -a']
+a) Com redirecionamento da saída padrão (stdout) para /dev/null:
+marcus@ubuntu-wsl:~$ uname -a > /dev/null
+(nenhuma saída exibida no terminal — código de saída: 0)
+
+b) Executando novamente SEM redirecionamento:
+marcus@ubuntu-wsl:~$ uname -a
+Linux ubuntu-wsl 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+
+[Teste 3: Demonstração complementar de descarte de erros (stderr -> 2>/dev/null)]
+marcus@ubuntu-wsl:~$ ls /diretorio_inexistente 2>/dev/null; echo "Exit status: $?"
+Exit status: 2
+
+3. DIFERENÇA OBSERVADA E CONCLUSÃO TÉCNICA
+--------------------------------------------------------------------------------
+- COM redirecionamento ('> /dev/null'): O comando é executado normalmente pelo
+  sistema operacional (mantendo o código de saída 0 em caso de sucesso), porém
+  o descritor de arquivo 1 (stdout) é apontado para o arquivo especial /dev/null,
+  fazendo com que o kernel descarte silenciosamente todo o fluxo textual sem
+  imprimi-lo no terminal nem gravá-lo em disco.
+- SEM redirecionamento: O descritor stdout permanece conectado ao terminal
+  interativo (tty/pts), exibindo integralmente a saída textual na tela.
+- Aplicações práticas: Muito utilizado em scripts de automação e tarefas cron
+  quando interessa apenas testar o código de retorno ($?) de um comando ou
+  suprimir mensagens verbosas/de erro ('2>/dev/null' ou '&>/dev/null').
+================================================================================

@@ -1,0 +1,58 @@
+================================================================================
+EXERCÍCIO 11: FILESYSTEMS MONTADOS (mount e df)
+================================================================================
+Aluno: Marcus Boni
+
+1. LISTAGEM DE FILESYSTEMS MONTADOS COM 'mount'
+--------------------------------------------------------------------------------
+marcus@ubuntu-wsl:~$ mount > filesystems.txt
+marcus@ubuntu-wsl:~$ mount
+overlay on / type overlay (rw,relatime,lowerdir=/var/lib/desktop-containerd/daemon/io.containerd.snapshotter.v1.overlayfs/snapshots/819/fs:/var/lib/desktop-containerd/daemon/io.containerd.snapshotter.v1.overlayfs/snapshots/761/fs,upperdir=/var/lib/desktop-containerd/daemon/io.containerd.snapshotter.v1.overlayfs/snapshots/820/fs,workdir=/var/lib/desktop-containerd/daemon/io.containerd.snapshotter.v1.overlayfs/snapshots/820/work)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev type tmpfs (rw,nosuid,size=65536k,mode=755)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=666)
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+cgroup on /sys/fs/cgroup type cgroup2 (rw,nosuid,nodev,noexec,relatime)
+mqueue on /dev/mqueue type mqueue (rw,nosuid,nodev,noexec,relatime)
+shm on /dev/shm type tmpfs (rw,nosuid,nodev,noexec,relatime,size=65536k)
+C:\ on /workspace type 9p (rw,noatime,aname=drvfs;path=C:\;uid=0;gid=0;metadata;symlinkroot=/mnt/host/,cache=5,access=client,msize=65536,trans=fd,rfd=5,wfd=5)
+/dev/sde on /etc/resolv.conf type ext4 (rw,relatime)
+/dev/sde on /etc/hostname type ext4 (rw,relatime)
+/dev/sde on /etc/hosts type ext4 (rw,relatime)
+
+2. ANÁLISE COMPLEMENTAR DE USO DE ESPAÇO EM DISCO COM 'df'
+--------------------------------------------------------------------------------
+a) Uso de espaço em formato legível por humanos ('df -h'):
+marcus@ubuntu-wsl:~$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+overlay        1007G  8.8G  947G   1% /
+tmpfs            64M     0   64M   0% /dev
+shm              64M     0   64M   0% /dev/shm
+C:\             476G  417G   60G  88% /workspace
+/dev/sde       1007G  8.8G  947G   1% /etc/hosts
+
+b) Uso de espaço exibindo explicitamente o tipo de filesystem ('df -hT'):
+marcus@ubuntu-wsl:~$ df -hT
+Filesystem     Type     Size  Used Avail Use% Mounted on
+overlay        overlay 1007G  8.8G  947G   1% /
+tmpfs          tmpfs     64M     0   64M   0% /dev
+shm            tmpfs     64M     0   64M   0% /dev/shm
+C:\            9p       476G  417G   60G  88% /workspace
+/dev/sde       ext4    1007G  8.8G  947G   1% /etc/hosts
+
+3. ANÁLISE TÉCNICA DOS FILESYSTEMS IDENTIFICADOS
+--------------------------------------------------------------------------------
+A combinação de 'mount' e 'df -hT' permite correlacionar os dispositivos físicos,
+virtuais e pseudo-filesystems do kernel com seus pontos de montagem e ocupação:
+- overlay (/): Sistema de arquivos em camadas (OverlayFS) utilizado como raiz
+  do ambiente containerizado Ubuntu 22.04 sobre o volume Linux (~1007 GiB totais).
+- ext4 (/dev/sde): Sistema de arquivos nativo Linux com journaling, hospedando
+  os arquivos de configuração e armazenamento persistente do ambiente.
+- 9p / drvfs (/workspace): Driver de integração (protocolo 9P / DrvFs) do WSL2
+  que monta o sistema de arquivos NTFS do host Windows na árvore de diretórios Linux.
+- tmpfs (/dev, /dev/shm, /run): Sistemas de arquivos temporários residentes em
+  memória RAM para alto desempenho e dados voláteis.
+- proc (/proc), sysfs (/sys), devpts (/dev/pts), cgroup2 (/sys/fs/cgroup):
+  Pseudo-filesystems do kernel que expõem processos, hardware, terminais e grupos
+  de controle de recursos diretamente como arquivos.
+================================================================================

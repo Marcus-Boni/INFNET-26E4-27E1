@@ -1,0 +1,62 @@
+================================================================================
+EXERCÍCIO 3: PIPELINES PARA INSPEÇÃO DE DISPOSITIVOS DE BLOCO EM /dev
+================================================================================
+Aluno: Marcus Boni
+
+1. COMANDOS EXECUTADOS
+--------------------------------------------------------------------------------
+# Passo 1: Listar todos os arquivos especiais presentes no diretório /dev
+marcus@ubuntu-wsl:~$ ls -la /dev
+
+# Passo 2: Filtrar apenas dispositivos do tipo bloco via pipeline (linha iniciada por 'b')
+marcus@ubuntu-wsl:~$ ls -la /dev | grep '^b'
+
+# Passo 3: Redirecionar o resultado filtrado para dispositivos_bloco.txt
+marcus@ubuntu-wsl:~$ ls -la /dev | grep '^b' > dispositivos_bloco.txt
+
+# Passo 4: Verificar o conteúdo do arquivo gerado utilizando 'less'
+marcus@ubuntu-wsl:~$ less dispositivos_bloco.txt
+
+2. DISPOSITIVOS DE BLOCO FILTRADOS EM /dev (CONTEÚDO DE dispositivos_bloco.txt)
+--------------------------------------------------------------------------------
+brw-rw----  1 root disk      7,   0 Nov 24 00:26 loop0
+brw-rw----  1 root disk      7,   1 Nov 24 00:26 loop1
+brw-rw----  1 root disk      7,   2 Nov 24 00:26 loop2
+brw-rw----  1 root disk      7,   3 Nov 24 00:26 loop3
+brw-rw----  1 root disk      7,   4 Nov 24 00:26 loop4
+brw-rw----  1 root disk      7,   5 Nov 24 00:26 loop5
+brw-rw----  1 root disk      7,   6 Nov 24 00:26 loop6
+brw-rw----  1 root disk      7,   7 Nov 24 00:26 loop7
+brw-rw----  1 root disk      1,   0 Nov 24 00:26 ram0
+brw-rw----  1 root disk      1,   1 Nov 24 00:26 ram1
+brw-rw----  1 root disk      1,  10 Nov 24 00:26 ram10
+brw-rw----  1 root disk      1,  11 Nov 24 00:26 ram11
+brw-rw----  1 root disk      1,  12 Nov 24 00:26 ram12
+brw-rw----  1 root disk      1,  13 Nov 24 00:26 ram13
+brw-rw----  1 root disk      1,  14 Nov 24 00:26 ram14
+brw-rw----  1 root disk      1,  15 Nov 24 00:26 ram15
+brw-rw----  1 root disk      1,   2 Nov 24 00:26 ram2
+brw-rw----  1 root disk      1,   3 Nov 24 00:26 ram3
+brw-rw----  1 root disk      1,   4 Nov 24 00:26 ram4
+brw-rw----  1 root disk      1,   5 Nov 24 00:26 ram5
+brw-rw----  1 root disk      1,   6 Nov 24 00:26 ram6
+brw-rw----  1 root disk      1,   7 Nov 24 00:26 ram7
+brw-rw----  1 root disk      1,   8 Nov 24 00:26 ram8
+brw-rw----  1 root disk      1,   9 Nov 24 00:26 ram9
+brw-rw----  1 root disk      8,   0 Nov 24 00:26 sda
+brw-rw----  1 root disk      8,  16 Nov 24 00:26 sdb
+brw-rw----  1 root disk      8,  32 Nov 24 00:26 sdc
+brw-rw----  1 root disk      8,  48 Nov 24 00:26 sdd
+brw-rw----  1 root disk      8,  64 Nov 24 00:26 sde
+
+3. ANÁLISE TÉCNICA DOS RESULTADOS
+--------------------------------------------------------------------------------
+- Total de dispositivos de bloco encontrados em /dev: 29
+- O primeiro caractere 'b' na coluna de permissões identifica um Block Special
+  File (dispositivo orientado a blocos, com acesso aleatório e bufferização no
+  kernel, como discos rígidos/virtuais e dispositivos loopback).
+- Os números separados por vírgula (ex.: 8, 64 em 'sde'; 7, 0 em 'loop0'; 1, 0
+  em 'ram0') correspondem respectivamente ao Major Number (identificador do
+  driver no kernel: 8 = sd, 7 = loop, 1 = ramdisk) e ao Minor Number (instância
+  específica do dispositivo ou partição gerenciada por aquele driver).
+================================================================================

@@ -1,0 +1,55 @@
+================================================================================
+EXERCÍCIO 5: USO CORRETO DE ASPAS SIMPLES E DUPLAS NO SHELL
+================================================================================
+Aluno: Marcus Boni
+
+1. USO DE 'echo' COM ASPAS SIMPLES E DUPLAS PARA TEXTOS DISTINTOS
+--------------------------------------------------------------------------------
+Quando a string contém apenas texto literal sem metacaracteres especiais, tanto
+aspas duplas ("...") quanto aspas simples ('...') preservam espaços e imprimem
+o conteúdo diretamente:
+
+marcus@ubuntu-wsl:~$ echo "Texto impresso com aspas duplas no GNU Bash."
+Texto impresso com aspas duplas no GNU Bash.
+
+marcus@ubuntu-wsl:~$ echo 'Texto impresso com aspas simples no GNU Bash.'
+Texto impresso com aspas simples no GNU Bash.
+
+2. DEMONSTRAÇÃO DE CASOS EM QUE O COMPORTAMENTO MUDA
+--------------------------------------------------------------------------------
+Caso A — Expansão de Variáveis de Ambiente ($USER e $HOME):
+marcus@ubuntu-wsl:~$ echo "Aspas Duplas  -> Usuario: $USER | Diretorio Home: $HOME"
+Aspas Duplas  -> Usuario: marcus | Diretorio Home: /home/marcus
+
+marcus@ubuntu-wsl:~$ echo 'Aspas Simples -> Usuario: $USER | Diretorio Home: $HOME'
+Aspas Simples -> Usuario: $USER | Diretorio Home: $HOME
+
+Caso B — Substituição de Comandos ($(hostname), $(uname -s)) e Aritmética ($((...))):
+marcus@ubuntu-wsl:~$ echo "Aspas Duplas  -> Host: $(hostname) | Kernel: $(uname -s) | Calculo: $((512 * 8)) bytes"
+Aspas Duplas  -> Host: ubuntu-wsl | Kernel: Linux | Calculo: 4096 bytes
+
+marcus@ubuntu-wsl:~$ echo 'Aspas Simples -> Host: $(hostname) | Kernel: $(uname -s) | Calculo: $((512 * 8)) bytes'
+Aspas Simples -> Host: $(hostname) | Kernel: $(uname -s) | Calculo: $((512 * 8)) bytes
+
+Caso C — Proteção contra Pathname Expansion / Globbing (*):
+Sem aspas, o caractere '*' é expandido para todos os arquivos .log do diretório;
+com aspas (simples ou duplas), o asterisco é tratado literalmente:
+marcus@ubuntu-wsl:~$ echo *.log
+aplicacao_sistema.log servico_api_01.log servico_api_02.log servico_api_03.log servico_auth_01.log servico_auth_02.log servico_auth_03.log servico_db_01.log servico_db_02.log servico_db_03.log
+
+marcus@ubuntu-wsl:~$ echo "*.log"
+*.log
+
+marcus@ubuntu-wsl:~$ echo '*.log'
+*.log
+
+3. CONCLUSÃO TÉCNICA SOBRE O COMPORTAMENTO DAS ASPAS
+--------------------------------------------------------------------------------
+- Aspas Duplas ("..."): Realizam "weak quoting" — protegem contra divisão de
+  palavras (Word Splitting) e expansão de curingas (*, ?), MAS permitem que o
+  shell interprete '$' (variáveis e aritmética), '$(...)' / crases (substituição
+  de comandos) e '\' (caractere de escape).
+- Aspas Simples ('...'): Realizam "strong quoting" — desativam TODA e qualquer
+  interpretação ou expansão pelo shell, preservando literalmente cada caractere
+  contido entre elas.
+================================================================================

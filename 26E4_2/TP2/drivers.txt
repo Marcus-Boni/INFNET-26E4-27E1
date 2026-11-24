@@ -1,0 +1,93 @@
+================================================================================
+EXERCÍCIO 9: DISPOSITIVOS E DRIVERS ATIVOS (/proc/devices)
+================================================================================
+Aluno: Marcus Boni
+
+1. COMANDOS EXECUTADOS
+--------------------------------------------------------------------------------
+# Listar os drivers de caractere e de bloco registrados no kernel Linux:
+marcus@ubuntu-wsl:~$ cat /proc/devices > drivers.txt
+
+# Inspecionar o arquivo gerado:
+marcus@ubuntu-wsl:~$ cat drivers.txt
+
+2. CONTEÚDO INTEGRAL DE /proc/devices
+--------------------------------------------------------------------------------
+Character devices:
+  1 mem
+  4 /dev/vc/0
+  4 tty
+  4 ttyS
+  5 /dev/tty
+  5 /dev/console
+  5 /dev/ptmx
+  7 vcs
+ 10 misc
+ 13 input
+ 21 sg
+ 29 fb
+108 ppp
+128 ptm
+136 pts
+226 drm
+229 hvc
+241 intel_mid_scu
+242 nvme-generic
+243 nvme
+244 virtio-portsdev
+245 bsg
+246 watchdog
+247 ptp
+248 pps
+249 rtc
+250 dax
+251 dimmctl
+252 ndctl
+253 tpm
+254 gpiochip
+
+Block devices:
+  1 ramdisk
+  7 loop
+  8 sd
+ 11 sr
+ 65 sd
+ 66 sd
+ 67 sd
+ 68 sd
+ 69 sd
+ 70 sd
+ 71 sd
+128 sd
+129 sd
+130 sd
+131 sd
+132 sd
+133 sd
+134 sd
+135 sd
+254 device-mapper
+259 blkext
+
+3. IDENTIFICAÇÃO DE DRIVERS DE BLOCO E DE CARACTERE
+--------------------------------------------------------------------------------
+Cada linha de /proc/devices exibe o Major Number (número principal atribuído ao
+driver pelo kernel) seguido do nome do driver registrado.
+
+a) Exemplos de DRIVERS DE BLOCO (Block devices) identificados:
+   - Major 8   -> sd       : Driver SCSI Disk responsável pelos discos /dev/sda,
+                             /dev/sdb, /dev/sdc, /dev/sdd e /dev/sde.
+   - Major 7   -> loop     : Driver de dispositivos loopback (/dev/loop0..loop7),
+                             que permite montar imagens de disco como block devices.
+   - Major 1   -> ramdisk  : Driver de discos em memória RAM (/dev/ram0..ram15).
+   - Major 259 -> blkext   : Driver de extensões de bloco (partições estendidas / NVMe).
+
+b) Exemplos de DRIVERS DE CARACTERE (Character devices) identificados:
+   - Major 1   -> mem      : Driver de dispositivos de memória e pseudo-dispositivos
+                             essenciais como /dev/null, /dev/zero, /dev/random.
+   - Major 4   -> tty      : Driver de terminais virtuais de console (/dev/tty0..).
+   - Major 5   -> /dev/tty : Driver do terminal controlador do processo atual e /dev/console.
+   - Major 21  -> sg       : Driver SCSI Generic para comunicação direta com dispositivos SCSI.
+   - Major 136 -> pts      : Driver de pseudoterminais escravos (/dev/pts/*), utilizados
+                             em sessões de terminal interativo e conexões SSH.
+================================================================================
